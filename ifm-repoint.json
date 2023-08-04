@@ -1,0 +1,83 @@
+{
+    "id": "ifm.repoint",
+    "version": "0.0.1",
+    "name": "IFM Repoint",
+    "description": "IFM Repoint",
+    "newInstancePrefix": "IFM",
+    "icon": "icon.png",
+    "vendor": "IFM",
+    "eula": "",
+    "license": "",
+    "imports": [
+        "input-controls"
+    ],
+    "webcomponents": [
+        {
+            "kind": "main",
+            "tag": "ifm-repoint",
+            "url": "ifm-repoint.js",
+            "integrity": "",
+            "ignoreIntegrity": true
+        }
+    ],
+    "properties": {
+        "metadata": {
+            "type": "string",
+            "description": "For internal use",
+            "default": ""
+        },
+        "list": {
+            "type": "ListItem[]",
+            "description": "list",
+            "default": [
+                {
+                    "key": "key",
+                    "value": "value"
+                }
+            ]
+        }
+    },
+    "methods": {
+        "getList": {
+            "returnType": "ListItem[]",
+            "description": "Get list",
+            "parameters": [],
+            "body": "return this.list;"
+        },
+        "setList": {
+            "description": "Set list",
+            "parameters": [
+                {
+                    "name": "value",
+                    "type": "ListItem[]",
+                    "description": "The new list"
+                }
+            ],
+            "body": "this.list = value;"
+        }
+    },
+    "types": {
+        "ListItem": {
+            "description": "A list item",
+            "properties": [
+                {
+                    "name": "key",
+                    "type": "string",
+                    "description": "Key of the list item",
+                    "mandatory": true
+                },
+                {
+                    "name": "value",
+                    "type": "string",
+                    "description": "Value of the list item",
+                    "mandatory": false
+                }
+            ]
+        }
+    },
+    "events": {
+        "onStart": {
+            "description": "onStart events trigger"
+        }
+    }
+}
