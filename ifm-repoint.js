@@ -268,44 +268,43 @@
                             items: {
                                 path: "/listItems",
                                 template: new sap.m.StandardListItem({
-                                    title: "{id}",
-                                    description: "{description}",
-                                    icon: "{iconFile}"
+                                    title: "{key}",
+                                    description: "{value}"
                                 })
                             }
                         });
-                        ui5List.addDragDropConfig(new sap.ui.core.dnd.DragInfo({
-                            sourceAggregation: "items"
-                        }));
-                        ui5List.addDragDropConfig(new sap.ui.core.dnd.DropInfo({
-                            targetAggregation: "items",
-                            dropPosition: "Between",
-                            dropLayout: "Vertical",
-                            drop: function (oInfo) {
-                                var oDragged = oInfo.getParameter("draggedControl"),
-                                    oDropped = oInfo.getParameter("droppedControl"),
-                                    sInsertPosition = oInfo.getParameter("dropPosition"),
-                                    iDragPosition = ui5List.indexOfItem(oDragged),
-                                    iDropPosition = ui5List.indexOfItem(oDropped);
+                        // ui5List.addDragDropConfig(new sap.ui.core.dnd.DragInfo({
+                        //     sourceAggregation: "items"
+                        // }));
+                        // ui5List.addDragDropConfig(new sap.ui.core.dnd.DropInfo({
+                        //     targetAggregation: "items",
+                        //     dropPosition: "Between",
+                        //     dropLayout: "Vertical",
+                        //     drop: function (oInfo) {
+                        //         var oDragged = oInfo.getParameter("draggedControl"),
+                        //             oDropped = oInfo.getParameter("droppedControl"),
+                        //             sInsertPosition = oInfo.getParameter("dropPosition"),
+                        //             iDragPosition = ui5List.indexOfItem(oDragged),
+                        //             iDropPosition = ui5List.indexOfItem(oDropped);
 
-                                ui5List.removeItem(oDragged);
+                        //         ui5List.removeItem(oDragged);
 
-                                if (iDragPosition < iDropPosition) {
-                                    iDropPosition--;
-                                };
+                        //         if (iDragPosition < iDropPosition) {
+                        //             iDropPosition--;
+                        //         };
 
-                                if (sInsertPosition === "After") {
-                                    iDropPosition++;
-                                };
+                        //         if (sInsertPosition === "After") {
+                        //             iDropPosition++;
+                        //         };
 
-                                var oData = sap.ui.getCore().getModel().oData;
+                        //         var oData = sap.ui.getCore().getModel().oData;
 
-                                that_.retrieveListData(oData, "listItems", iDragPosition, iDropPosition);
-                                that_.updateList(oData);
+                        //         that_.retrieveListData(oData, "listItems", iDragPosition, iDropPosition);
+                        //         that_.updateList(oData);
 
-                                ui5List.insertItem(oDragged, iDropPosition);
-                            }
-                        }));
+                        //         ui5List.insertItem(oDragged, iDropPosition);
+                        //     }
+                        // }));
                         var ui5Card = new sap.f.Card({
                             content: [ui5List]
                         });
