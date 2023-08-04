@@ -4,7 +4,7 @@
     "name": "IFM Repoint",
     "description": "IFM Repoint",
     "newInstancePrefix": "IFM",
-    "icon": "icon.png",
+    "icon": "https://1dawu2.github.io/ifm-repoint/icon.png",
     "vendor": "IFM",
     "eula": "",
     "license": "",
@@ -15,7 +15,7 @@
         {
             "kind": "main",
             "tag": "ifm-repoint",
-            "url": "ifm-repoint.js",
+            "url": "https://1dawu2.github.io/ifm-repoint/ifm-repoint.js",
             "integrity": "",
             "ignoreIntegrity": true
         }
