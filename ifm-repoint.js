@@ -342,7 +342,7 @@
                                     var oData = sap.ui.getCore().getModel().oData;
                                     that_.updateList(oData);
                                     this.oDefaultDialog.close();
-                                    that.getStoryContent("58E2EF00C1F750DDC046ABF160CFF44B");
+                                    that_.getStoryContent("58E2EF00C1F750DDC046ABF160CFF44B");
                                 }.bind(this)
                             })
                         });
