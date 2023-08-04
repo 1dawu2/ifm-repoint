@@ -293,38 +293,6 @@
                                 })
                             }
                         });
-                        // ui5List.addDragDropConfig(new sap.ui.core.dnd.DragInfo({
-                        //     sourceAggregation: "items"
-                        // }));
-                        // ui5List.addDragDropConfig(new sap.ui.core.dnd.DropInfo({
-                        //     targetAggregation: "items",
-                        //     dropPosition: "Between",
-                        //     dropLayout: "Vertical",
-                        //     drop: function (oInfo) {
-                        //         var oDragged = oInfo.getParameter("draggedControl"),
-                        //             oDropped = oInfo.getParameter("droppedControl"),
-                        //             sInsertPosition = oInfo.getParameter("dropPosition"),
-                        //             iDragPosition = ui5List.indexOfItem(oDragged),
-                        //             iDropPosition = ui5List.indexOfItem(oDropped);
-
-                        //         ui5List.removeItem(oDragged);
-
-                        //         if (iDragPosition < iDropPosition) {
-                        //             iDropPosition--;
-                        //         };
-
-                        //         if (sInsertPosition === "After") {
-                        //             iDropPosition++;
-                        //         };
-
-                        //         var oData = sap.ui.getCore().getModel().oData;
-
-                        //         that_.retrieveListData(oData, "listItems", iDragPosition, iDropPosition);
-                        //         that_.updateList(oData);
-
-                        //         ui5List.insertItem(oDragged, iDropPosition);
-                        //     }
-                        // }));
                         var ui5Card = new sap.f.Card({
                             content: [ui5List]
                         });
@@ -342,7 +310,7 @@
                                     var oData = sap.ui.getCore().getModel().oData;
                                     that_.updateList(oData);
                                     this.oDefaultDialog.close();
-                                    that_.getStoryContent("58E2EF00C1F750DDC046ABF160CFF44B");
+                                    this.getStoryContent("58E2EF00C1F750DDC046ABF160CFF44B");
                                 }.bind(this)
                             })
                         });
