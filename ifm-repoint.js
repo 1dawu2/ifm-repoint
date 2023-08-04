@@ -263,8 +263,8 @@
                             // wait...
                             const statuses = await statusesPromise;
                             // after 1 second
-                            console.log(statuses);
-                            return statuses;
+                            console.log(statuses[0].value.cdata);
+                            return statuses[0].value.cdata;
                         }
                         // return await new Promise(function (resolve, reject) {
                         //   sap.fpa.ui.story.StoryFetcher.getContent(storyId).then(function (content) {
