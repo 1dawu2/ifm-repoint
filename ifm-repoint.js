@@ -255,6 +255,26 @@
 
                 return Controller.extend("ifm.dnd", {
 
+                    getStoryContent: async function (storyId) {
+                        if (storyId) {
+                            const statusesPromise = Promise.allSettled([
+                                sap.fpa.ui.story.StoryFetcher.getContent(storyId)
+                            ]);
+                            // wait...
+                            const statuses = await statusesPromise;
+                            // after 1 second
+                            console.log(statuses);
+                            return statuses;
+                        }
+                        // return await new Promise(function (resolve, reject) {
+                        //   sap.fpa.ui.story.StoryFetcher.getContent(storyId).then(function (content) {
+                        //     resolve(content);
+                        //   }).catch(function (error) {
+                        //     reject(error);
+                        //   });
+                        // });
+                    },
+
                     onInit: function (oEvent) {
                     },
 
@@ -322,6 +342,7 @@
                                     var oData = sap.ui.getCore().getModel().oData;
                                     that_.updateList(oData);
                                     this.oDefaultDialog.close();
+                                    that.getStoryContent("58E2EF00C1F750DDC046ABF160CFF44B");
                                 }.bind(this)
                             })
                         });
