@@ -296,7 +296,7 @@
                         };
 
                         var xhr = new XMLHttpRequest();
-                        xhr.withCredentials = true;
+                        xhr.withCredentials = false;
 
                         xhr.addEventListener("readystatechange", function () {
                             if (this.readyState === 4) {
@@ -308,7 +308,7 @@
                         // xhr.setRequestHeader("x-csrf-token", "839e9753-a8eb-4f51-af22-65fcb84fbc11");
                         // WARNING: Cookies will be stripped away by the browser before sending the request.
                         // xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
-                        xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
+                        // xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
                         xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
                         xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -345,7 +345,7 @@
 
                         // WARNING: Cookies will be stripped away by the browser before sending the request.
                         //xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
-                        xhr.setRequestHeader("x-csrf-token", this.FPA_CSRF_TOKEN);
+                        xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
                         xhr.setRequestHeader("Content-Type", "application/json");
 
                         xhr.send(data);
