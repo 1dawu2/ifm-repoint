@@ -466,13 +466,14 @@
                                     //     console.log(error);
                                     // });
 
-                                    const res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (e) {
-                                        console.log(e.target.response);
+                                    var content = {};
+                                    var res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (e) {
+                                        content = JSON.parse(e.target.response);
                                     }, function (e) {
                                         // handle errors
                                     });
 
-                                    this.getModelList(res);
+                                    this.getModelList(content);
 
                                     // this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
                                     //     var resourceInfoStory = JSON.stringify(response);
