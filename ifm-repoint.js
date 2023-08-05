@@ -305,7 +305,7 @@
                         });
 
                         xhr.open("POST", "https://infomotion1.eu10.hanacloudservices.cloud.sap/sap/fpa/services/rest/epm/contentlib?tenant=K");
-                        xhr.setRequestHeader("x-csrf-token", "839e9753-a8eb-4f51-af22-65fcb84fbc11");
+                        // xhr.setRequestHeader("x-csrf-token", "839e9753-a8eb-4f51-af22-65fcb84fbc11");
                         // WARNING: Cookies will be stripped away by the browser before sending the request.
                         // xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
                         // xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
@@ -432,6 +432,8 @@
                             content: [ui5Card]
                         });
                         this.oDefaultDialog = new sap.m.Dialog({
+                            width: "100%",
+                            height: "400px",
                             title: "Settings",
                             content: [ui5ScrollContainer],
                             beginButton: new sap.m.Button({
@@ -440,14 +442,15 @@
                                     var oData = sap.ui.getCore().getModel().oData;
                                     that_.updateList(oData);
                                     this.oDefaultDialog.close();
-                                    this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
-                                    this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
-                                        var resourceInfoStory = JSON.stringify(response);
-                                        var entities = this.getModelList(response);
-                                        that_.setStoryInfo(oData);
-                                    }).catch(function (error) {
-                                        console.log(error);
-                                    });
+                                    var content = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
+                                    var entities = this.getModelList(content);
+                                    // this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
+                                    //     var resourceInfoStory = JSON.stringify(response);
+                                    //     var entities = this.getModelList(response);
+                                    //     that_.setStoryInfo(oData);
+                                    // }).catch(function (error) {
+                                    //     console.log(error);
+                                    // });
 
                                 }.bind(this)
                             })
