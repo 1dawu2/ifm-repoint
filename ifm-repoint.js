@@ -340,13 +340,11 @@
                             }
                         });
 
-                        console.log(this.FPA_CSRF_TOKEN);
-
                         xhr.open("POST", "https://infomotion1.eu10.hanacloudservices.cloud.sap/sap/fpa/services/rest/epm/contentlib?tenant=K");
 
                         // WARNING: Cookies will be stripped away by the browser before sending the request.
                         //xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
-                        //xhr.setRequestHeader("x-csrf-token", "82fe0784-68bc-4475-9e82-6398627de615");
+                        xhr.setRequestHeader("x-csrf-token", this.FPA_CSRF_TOKEN);
                         xhr.setRequestHeader("Content-Type", "application/json");
 
                         xhr.send(data);
