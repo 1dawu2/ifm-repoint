@@ -344,8 +344,10 @@
                                     var oData = sap.ui.getCore().getModel().oData;
                                     that_.updateList(oData);
                                     this.oDefaultDialog.close();
-                                    var content = this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B");
-                                    var entities = this.getModelList(content);
+                                    this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
+                                        var entities = this.getModelList(response);
+                                    });
+
                                 }.bind(this)
                             })
                         });
