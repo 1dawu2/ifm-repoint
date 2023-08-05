@@ -342,7 +342,7 @@
                             }
                         });
 
-                        xhr.open("POST", "https://infomotion1.eu10.hanacloudservices.cloud.sap/sap/fpa/services/rest/epm/contentlib?tenant=K");
+                        xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
 
                         // WARNING: Cookies will be stripped away by the browser before sending the request.
                         //xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
@@ -448,21 +448,21 @@
                             content: [ui5List]
                         });
                         var ui5ScrollContainer = new sap.m.ScrollContainer({
-                            height: "400px",
+                            height: "100%",
                             width: "100%",
                             content: [ui5Card]
                         });
                         this.oDefaultDialog = new sap.m.Dialog({
                             contentWidth: "100%",
-                            contentHeight: "400px",
+                            contentHeight: "100%",
                             title: "Settings",
                             content: [ui5ScrollContainer],
                             beginButton: new sap.m.Button({
                                 text: "OK",
                                 press: function () {
-                                    var oData = sap.ui.getCore().getModel().oData;
-                                    that_.updateList(oData);
-                                    this.oDefaultDialog.close();
+                                    // var oData = sap.ui.getCore().getModel().oData;
+                                    // that_.updateList(oData);
+
                                     // this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (content) {
                                     //     var entities = this.getModelList(content);
                                     // }).catch(function (error) {
@@ -479,6 +479,9 @@
                                     // }).catch(function (error) {
                                     //     console.log(error);
                                     // });
+
+                                    this.oDefaultDialog.close();
+                                    // show message
 
                                 }.bind(this)
                             })
