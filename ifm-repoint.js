@@ -260,8 +260,8 @@
 
                 return Controller.extend("ifm.repoint", {
 
-                    getStoryInfo(storyID) {
-                        var data = {
+                    async getStoryInfo(storyID) {
+                        var data = JSON.stringify({
                             "action": "getResourceEx",
                             "data": {
                                 "resourceId": storyID,
@@ -293,10 +293,10 @@
                                     "spaceId": true
                                 }
                             }
-                        };
+                        });
 
                         var xhr = new XMLHttpRequest();
-                        xhr.withCredentials = true;
+                        // xhr.withCredentials = true;
 
                         xhr.addEventListener("readystatechange", function () {
                             if (this.readyState === 4) {
@@ -304,12 +304,14 @@
                             }
                         });
 
-                        xhr.open("POST", "https://infomotion1.eu10.hanacloudservices.cloud.sap/sap/fpa/services/rest/epm/contentlib?tenant=K");
+                        xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
                         // WARNING: Cookies will be stripped away by the browser before sending the request.
-                        xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
-                        xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
+                        // xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
+                        // xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
                         xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
                         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                        xhr.setRequestHeader("Accept-Language", "en_GB");
+
 
                         xhr.send(data);
 
