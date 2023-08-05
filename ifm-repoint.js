@@ -469,7 +469,7 @@
                                     //     console.log(error);
                                     // });
 
-                                    var resp = getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
+                                    var resp = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
                                     console.log(resp);
                                     // this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
                                     //     var resourceInfoStory = JSON.stringify(response);
