@@ -32,7 +32,8 @@
             "default": [
                 {
                     "key": "key",
-                    "value": "value"
+                    "old_value": "old_value",
+                    "new_value": "new_value"
                 }
             ]
         }
@@ -67,9 +68,15 @@
                     "mandatory": true
                 },
                 {
-                    "name": "value",
+                    "name": "old_value",
                     "type": "string",
-                    "description": "Value of the list item",
+                    "description": "Old value of the list item",
+                    "mandatory": false
+                },
+                {
+                    "name": "new_value",
+                    "type": "string",
+                    "description": "New value of the list item",
                     "mandatory": false
                 }
             ]

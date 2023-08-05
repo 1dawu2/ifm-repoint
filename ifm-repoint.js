@@ -62,12 +62,6 @@
         }
 
         // CONTROL FLOW
-        retrieveListData(listItems, modelIdentifier, fromIndex, toIndex) {
-            var element = listItems[modelIdentifier][fromIndex];
-            listItems[modelIdentifier].splice(fromIndex, 1);
-            listItems[modelIdentifier].splice(toIndex, 0, element);
-        }
-
         updateList(oData) {
             console.log("oData update");
             console.log(oData);
@@ -101,7 +95,7 @@
         setStoryInfo(oData) {
             if (typeof oData != 'undefined' && oData) {
                 Object.values(oData).forEach(
-                    val => console.log(val);
+                    val => console.log(val)
                 );
 
             }
@@ -333,7 +327,7 @@
                                 path: "/listItems",
                                 template: new sap.m.StandardListItem({
                                     title: "{key}",
-                                    description: "{value}"
+                                    description: "{old_value} : {new_value} "
                                 })
                             }
                         });
