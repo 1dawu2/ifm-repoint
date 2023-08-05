@@ -260,7 +260,7 @@
 
                 return Controller.extend("ifm.repoint", {
 
-                    async getStoryInfo(storyID) {
+                    getStoryInfo: async function (storyID) {
                         var data = JSON.stringify({
                             "action": "getResourceEx",
                             "data": {
@@ -468,10 +468,13 @@
                                     // }).catch(function (error) {
                                     //     console.log(error);
                                     // });
+                                    const respPromise = Promise.allSettled([
+                                        this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B")
+                                    ]);
 
-                                    var resp = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
-                                    console.log(resp);
-                                    this.getModelList(resp);
+                                    console.log(respPromise[0].value.cdata);
+
+                                    this.getModelList(respPromise[0].value.cdata);
                                     // this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
                                     //     var resourceInfoStory = JSON.stringify(response);
                                     //     var entities = this.getModelList(response);
