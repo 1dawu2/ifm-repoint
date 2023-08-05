@@ -301,7 +301,7 @@
 
                             xhr.addEventListener("readystatechange", function () {
                                 if (this.readyState === 4) {
-                                    console.log(this.responseText);
+                                    console.log(xhr.response.json());
                                 }
                             });
 
@@ -314,7 +314,7 @@
                             xhr.setRequestHeader("Accept-Language", "en_GB");
 
                             xhr.onload = function (e) {
-                                resolve(xhr.response);
+                                resolve(xhr.response.json());
                             };
                             xhr.onerror = function () {
                                 resolve(undefined);
@@ -323,7 +323,7 @@
 
                             xhr.send(data);
                         })
-                        return response.json();
+                        return response;
                     },
 
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
