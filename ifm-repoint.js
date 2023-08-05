@@ -260,8 +260,8 @@
 
                 return Controller.extend("ifm.repoint", {
 
-                    async getStoryInfo(storyID) {
-                        const jsonResponse = {};
+                    getStoryInfo: async function (storyID) {
+
                         var data = JSON.stringify({
                             "action": "getResourceEx",
                             "data": {
@@ -296,37 +296,50 @@
                             }
                         });
 
-                        let response = await new Promise(resolve => {
-                            var xhr = new XMLHttpRequest();
-                            xhr.responseType = 'json';
-                            // xhr.withCredentials = true;
+                        const response = await fetch("/sap/fpa/services/rest/epm/contentlib?tenant=K", {
+                            method: "POST", // *GET, POST, PUT, DELETE, etc.
+                            mode: "cors", // no-cors, *cors, same-origin
+                            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                            credentials: "same-origin", // include, *same-origin, omit
+                            headers: {
+                                "Content-Type": "application/json",
+                                // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            redirect: "follow", // manual, *follow, error
+                            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                            body: JSON.stringify(data), // body data type must match "Content-Type" header
+                        });
 
-                            xhr.addEventListener("readystatechange", function () {
-                                if (this.readyState === 4) {
-                                    console.log(this.responseText);
-                                    jsonResponse = JSON.parse(this.responseText);
-                                }
-                            });
+                        // let response = await new Promise(resolve => {
+                        //     var xhr = new XMLHttpRequest();
+                        //     xhr.responseType = 'json';
+                        //     // xhr.withCredentials = true;
 
-                            xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
-                            // WARNING: Cookies will be stripped away by the browser before sending the request.
-                            // xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
-                            // xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
-                            xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
-                            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                            xhr.setRequestHeader("Accept-Language", "en_GB");
+                        //     xhr.addEventListener("readystatechange", function () {
+                        //         if (this.readyState === 4) {
+                        //             console.log(this.responseText);
+                        //         }
+                        //     });
 
-                            xhr.onload = function (e) {
-                                resolve(xhr.response);
-                            };
-                            xhr.onerror = function () {
-                                resolve(undefined);
-                                console.error("** An error occurred during the XMLHttpRequest");
-                            };
+                        //     xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
+                        //     // WARNING: Cookies will be stripped away by the browser before sending the request.
+                        //     // xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
+                        //     // xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
+                        //     xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
+                        //     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                        //     xhr.setRequestHeader("Accept-Language", "en_GB");
 
-                            xhr.send(data);
-                        })
-                        return jsonResponse;
+                        //     xhr.onload = function (e) {
+                        //         resolve(xhr.response);
+                        //     };
+                        //     xhr.onerror = function () {
+                        //         resolve(undefined);
+                        //         console.error("** An error occurred during the XMLHttpRequest");
+                        //     };
+
+                        //     xhr.send(data);
+                        // })
+                        return response.json();
                     },
 
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
