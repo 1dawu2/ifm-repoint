@@ -52,6 +52,7 @@
             this._export_settings = {};
             this._export_settings.list = {};
             this.resourceInfoStoryIsOptimized = false;
+            this.resourceInfoStory = {};
 
             loadthis(this);
 
@@ -345,7 +346,10 @@
                                     that_.updateList(oData);
                                     this.oDefaultDialog.close();
                                     this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
+                                        this.resourceInfoStory = JSON.stringify(response);
                                         var entities = this.getModelList(response);
+                                    }).catch(function (error) {
+                                        console.log(error);
                                     });
 
                                 }.bind(this)
