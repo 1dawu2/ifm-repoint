@@ -261,6 +261,7 @@
                 return Controller.extend("ifm.repoint", {
 
                     async getStoryInfo(storyID) {
+                        const jsonResponse = {};
                         var data = JSON.stringify({
                             "action": "getResourceEx",
                             "data": {
@@ -297,11 +298,13 @@
 
                         let response = await new Promise(resolve => {
                             var xhr = new XMLHttpRequest();
+                            xhr.responseType = 'json';
                             // xhr.withCredentials = true;
 
                             xhr.addEventListener("readystatechange", function () {
                                 if (this.readyState === 4) {
-                                    console.log(xhr.response.json());
+                                    console.log(this.responseText);
+                                    jsonResponse = JSON.parse(this.responseText);
                                 }
                             });
 
@@ -314,7 +317,7 @@
                             xhr.setRequestHeader("Accept-Language", "en_GB");
 
                             xhr.onload = function (e) {
-                                resolve(xhr.response.json());
+                                resolve(xhr.response);
                             };
                             xhr.onerror = function () {
                                 resolve(undefined);
@@ -323,7 +326,7 @@
 
                             xhr.send(data);
                         })
-                        return response;
+                        return jsonResponse;
                     },
 
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
