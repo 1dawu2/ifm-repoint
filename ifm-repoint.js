@@ -297,7 +297,6 @@
                         });
 
                         var xhr = new XMLHttpRequest();
-                        xhr.responseType = 'json';
 
                         xhr.addEventListener("readystatechange", function () {
                             if (this.readyState === 4) {
