@@ -469,7 +469,27 @@
                                     var content = {};
                                     var res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (e) {
                                         content = JSON.parse(e.target.response);
-                                        this.getModelList(content);
+                                        let entityList = [];
+                                        let storyContentFound = false;
+                                        try {
+                                            // optimized path
+                                            entityList = content.cdata.contentOptimized.entities;
+                                            storyContentFound = true;
+                                            console.log("Story is content optimized.");
+                                            this.resourceInfoStoryIsOptimized = true;
+                                        } catch {
+                                            if (storyContentFound == false) {
+                                                try {
+                                                    // classic path
+                                                    entityList = content.cdata.content.entities;
+                                                    storyContentFound = true;
+                                                    console.log("Story is not content Optimized -> classic format.");
+                                                    this.resourceInfoStoryIsOptimized = false;
+                                                } catch {
+                                                    console.log("No Story Content Found.")
+                                                }
+                                            }
+                                        }
                                     }, function (e) {
                                         // handle errors
                                     });
