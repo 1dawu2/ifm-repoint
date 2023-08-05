@@ -260,7 +260,7 @@
 
                 return Controller.extend("ifm.repoint", {
 
-                    getStoryInfo: async function (storyID) {
+                    async getStoryInfo(storyID) {
                         var data = JSON.stringify({
                             "action": "getResourceEx",
                             "data": {
@@ -295,26 +295,35 @@
                             }
                         });
 
-                        var xhr = new XMLHttpRequest();
-                        // xhr.withCredentials = true;
+                        let response = await new Promise(resolve => {
+                            var xhr = new XMLHttpRequest();
+                            // xhr.withCredentials = true;
 
-                        xhr.addEventListener("readystatechange", function () {
-                            if (this.readyState === 4) {
-                                console.log(this.responseText);
-                            }
-                        });
+                            xhr.addEventListener("readystatechange", function () {
+                                if (this.readyState === 4) {
+                                    console.log(this.responseText);
+                                }
+                            });
 
-                        xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
-                        // WARNING: Cookies will be stripped away by the browser before sending the request.
-                        // xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
-                        // xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
-                        xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
-                        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                        xhr.setRequestHeader("Accept-Language", "en_GB");
+                            xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
+                            // WARNING: Cookies will be stripped away by the browser before sending the request.
+                            // xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
+                            // xhr.setRequestHeader("x-sap-sac-custom-auth", "true");
+                            xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
+                            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                            xhr.setRequestHeader("Accept-Language", "en_GB");
 
+                            xhr.onload = function (e) {
+                                resolve(xhr.response);
+                            };
+                            xhr.onerror = function () {
+                                resolve(undefined);
+                                console.error("** An error occurred during the XMLHttpRequest");
+                            };
 
-                        xhr.send(data);
-
+                            xhr.send(data);
+                        })
+                        return response;
                     },
 
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
@@ -468,13 +477,10 @@
                                     // }).catch(function (error) {
                                     //     console.log(error);
                                     // });
-                                    const respPromise = Promise.allSettled([
-                                        this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B")
-                                    ]);
 
-                                    console.log(respPromise[0].value.cdata);
+                                    var content = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
+                                    this.getModelList(content);
 
-                                    this.getModelList(respPromise[0].value.cdata);
                                     // this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
                                     //     var resourceInfoStory = JSON.stringify(response);
                                     //     var entities = this.getModelList(response);
