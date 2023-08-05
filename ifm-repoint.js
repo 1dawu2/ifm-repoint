@@ -327,7 +327,8 @@
                                 path: "/listItems",
                                 template: new sap.m.StandardListItem({
                                     title: "{key}",
-                                    description: "{old_value} : {new_value} "
+                                    info: "{old_value",
+                                    description: "{new_value}"
                                 })
                             }
                         });
