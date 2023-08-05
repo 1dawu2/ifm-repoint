@@ -301,7 +301,7 @@
                         xhr.addEventListener("readystatechange", function () {
                             if (this.readyState === 4) {
                                 console.log(this.responseText);
-                                return this.responseText
+                                return JSON.stringify(this.responseText)
                             }
                         });
 
@@ -464,6 +464,10 @@
                                     // }).catch(function (error) {
                                     //     console.log(error);
                                     // });
+
+                                    var res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
+                                    console.log(res);
+
 
                                     this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(resp => {
                                         this.getModelList(resp);
