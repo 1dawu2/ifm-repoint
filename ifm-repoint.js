@@ -349,7 +349,7 @@
                         xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
                         xhr.setRequestHeader("Content-Type", "application/json");
 
-                        xhr.send(data);
+                        return xhr.send(data);
 
                     },
 
@@ -468,6 +468,8 @@
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
+
+                                    var resp = getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
                                     // this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
                                     //     var resourceInfoStory = JSON.stringify(response);
                                     //     var entities = this.getModelList(response);
