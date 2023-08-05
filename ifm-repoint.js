@@ -51,6 +51,7 @@
 
             this._export_settings = {};
             this._export_settings.list = {};
+            this.resourceInfoStoryIsOptimized = false;
 
             loadthis(this);
 
@@ -255,6 +256,46 @@
 
                 return Controller.extend("ifm.dnd", {
 
+                    getModelList(content) {
+                        // The path to the entity collection differs between contentOptimized and "classic"
+                        // Try both paths - give preference on optimized
+                        let entityList = [];
+                        let storyContentFound = false;
+                        try {
+                            // optimized path
+                            entityList = content.cdata.contentOptimized.entities;
+                            storyContentFound = true;
+                            console.log("Story is content optimized.");
+                            this.resourceInfoStoryIsOptimized = true;
+                        } catch {
+                            if (storyContentFound == false) {
+                                try {
+                                    // classic path
+                                    entityList = content.cdata.content.entities;
+                                    storyContentFound = true;
+                                    console.log("Story is not content Optimized -> classic format.");
+                                    this.resourceInfoStoryIsOptimized = false;
+                                } catch {
+                                    console.log("No Story Content Found.")
+                                }
+                            }
+                        }
+                        return entityList;
+                    },
+
+                    replaceNameValueJSON(content, name, old_value, new_value) {
+
+                        let name_str = JSON.stringify(name);
+                        let old_value_str = JSON.stringify(old_value);
+                        let new_value_str = JSON.stringify(new_value);
+                        let search_str = name_str + ":" + old_value_str;
+                        let replace_str = name_str + ":" + new_value_str;
+                        console.log("JSON Search/replace: " + search_str + " replace by " + replace_str);
+
+                        content = content.replaceAll(search_str, replace_str)
+                        return content;
+                    },
+
                     getStoryContent: async function (storyId) {
                         if (storyId) {
                             const statusesPromise = Promise.allSettled([
@@ -266,13 +307,6 @@
                             console.log(statuses[0].value.cdata);
                             return statuses[0].value.cdata;
                         }
-                        // return await new Promise(function (resolve, reject) {
-                        //   sap.fpa.ui.story.StoryFetcher.getContent(storyId).then(function (content) {
-                        //     resolve(content);
-                        //   }).catch(function (error) {
-                        //     reject(error);
-                        //   });
-                        // });
                     },
 
                     onInit: function (oEvent) {
@@ -310,7 +344,8 @@
                                     var oData = sap.ui.getCore().getModel().oData;
                                     that_.updateList(oData);
                                     this.oDefaultDialog.close();
-                                    this.getStoryContent("58E2EF00C1F750DDC046ABF160CFF44B");
+                                    var content = this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B");
+                                    var entities = this.getModelList(content);
                                 }.bind(this)
                             })
                         });
