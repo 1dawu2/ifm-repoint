@@ -260,57 +260,58 @@
 
                 return Controller.extend("ifm.repoint", {
 
-                    getStoryInfo: async function (storyID) {
-
-                        var data = JSON.stringify({
-                            "action": "getResourceEx",
-                            "data": {
-                                "resourceId": storyID,
-                                "metadata": {
-                                    "name": true,
-                                    "description": true,
-                                    "access": true,
-                                    "userAuthOnly": true,
-                                    "ancestorPath": {
+                    getStoryInfo(storyID) {
+                        return new Promise(function (resolve, reject) {
+                            var data = JSON.stringify({
+                                "action": "getResourceEx",
+                                "data": {
+                                    "resourceId": storyID,
+                                    "metadata": {
                                         "name": true,
-                                        "access": true,
                                         "description": true,
-                                        "ownerType": true,
-                                        "parentResId": true,
+                                        "access": true,
+                                        "userAuthOnly": true,
+                                        "ancestorPath": {
+                                            "name": true,
+                                            "access": true,
+                                            "description": true,
+                                            "ownerType": true,
+                                            "parentResId": true,
+                                            "spaceId": true
+                                        },
+                                        "resourceType": true,
+                                        "packageId": true,
+                                        "createdBy": true,
+                                        "modifiedBy": true,
+                                        "updateCounter": true,
+                                        "createdTime": true,
+                                        "modifiedTime": true,
+                                        "epmObjectData": {
+                                            "includeDependencies": false,
+                                            "includeSubItems": true,
+                                            "options": {}
+                                        },
                                         "spaceId": true
-                                    },
-                                    "resourceType": true,
-                                    "packageId": true,
-                                    "createdBy": true,
-                                    "modifiedBy": true,
-                                    "updateCounter": true,
-                                    "createdTime": true,
-                                    "modifiedTime": true,
-                                    "epmObjectData": {
-                                        "includeDependencies": false,
-                                        "includeSubItems": true,
-                                        "options": {}
-                                    },
-                                    "spaceId": true
+                                    }
                                 }
-                            }
+                            });
+                            var xhr = new XMLHttpRequest();
+
+                            // xhr.addEventListener("readystatechange", function () {
+                            //     if (this.readyState === 4) {
+                            //         console.log(this.responseText);
+                            //         return JSON.stringify(this.responseText)
+                            //     }
+                            // });
+
+                            xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
+                            xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
+                            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                            xhr.setRequestHeader("Accept-Language", "en_GB");
+                            xhr.onload = resolve;
+                            xhr.onerror = reject;
+                            xhr.send(data);
                         });
-
-                        var xhr = new XMLHttpRequest();
-
-                        xhr.addEventListener("readystatechange", function () {
-                            if (this.readyState === 4) {
-                                console.log(this.responseText);
-                                return JSON.stringify(this.responseText)
-                            }
-                        });
-
-                        xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
-                        xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
-                        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                        xhr.setRequestHeader("Accept-Language", "en_GB");
-
-                        xhr.send(data);
                     },
 
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
@@ -465,8 +466,11 @@
                                     //     console.log(error);
                                     // });
 
-                                    var res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B");
-                                    console.log(res);
+                                    const res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (e) {
+                                        console.log(e.target.response);
+                                    }, function (e) {
+                                        // handle errors
+                                    });
 
 
                                     this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(resp => {
