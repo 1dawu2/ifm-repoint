@@ -386,7 +386,7 @@
                                     that_.updateList(oData);
                                     this.oDefaultDialog.close();
                                     this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
-                                        this.resourceInfoStory = JSON.stringify(response);
+                                        var resourceInfoStory = JSON.stringify(response);
                                         var entities = this.getModelList(response);
                                         that_.setStoryInfo(oData);
                                     }).catch(function (error) {
