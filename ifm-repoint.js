@@ -323,7 +323,7 @@
 
                             xhr.send(data);
                         })
-                        return response;
+                        return JSON.stringify(response.json().data.cdata);
                     },
 
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
