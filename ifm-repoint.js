@@ -327,7 +327,7 @@
                                 path: "/listItems",
                                 template: new sap.m.StandardListItem({
                                     title: "{key}",
-                                    info: "{old_value",
+                                    info: "{old_value}",
                                     description: "{new_value}"
                                 })
                             }
@@ -341,7 +341,7 @@
                             content: [ui5Card]
                         });
                         this.oDefaultDialog = new sap.m.Dialog({
-                            title: "Sort List Items",
+                            title: "Settings",
                             content: [ui5ScrollContainer],
                             beginButton: new sap.m.Button({
                                 text: "OK",
