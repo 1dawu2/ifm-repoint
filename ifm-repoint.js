@@ -98,6 +98,15 @@
             return sacList
         }
 
+        setStoryInfo(oData) {
+            if (typeof oData != 'undefined' && oData) {
+                Object.values(oData).forEach(
+                    val => console.log(val);
+                );
+
+            }
+        }
+
         connectedCallback() {
             try {
                 if (window.commonApp) {
@@ -348,6 +357,7 @@
                                     this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
                                         this.resourceInfoStory = JSON.stringify(response);
                                         var entities = this.getModelList(response);
+                                        that_.setStoryInfo(oData);
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
