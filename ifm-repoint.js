@@ -260,9 +260,22 @@
 
                 return Controller.extend("ifm.repoint", {
 
-                    updateStory() {
-                        var data = "{\n    \"action\": \"updateContent\",\n    \"data\": {\n        \"parentResId\": \"\",\n        \"resourceType\": \"\",\n        \"name\": \"\",\n        \"description\": \"\",\n        \"cdata\": ,\n        \"updateOpt\": {\n            \"action\": \"updateStructure\",\n            \"markForTranslation\": false\n        },\n        \"resourceId\": \"179AF700C1F6054D4DB416C623EE5D2B\"\n    }\n}";
-
+                    updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
+                        var data = {
+                            "action": "updateContent",
+                            "data": {
+                                "parentResId": resourceInfoStoryParentId,
+                                "resourceType": resourceInfoStoryType,
+                                "name": resourceInfoStoryName,
+                                "description": resourceInfoStoryDescription,
+                                "cdata": resourceInfoStoryReplacedConn,
+                                "updateOpt": {
+                                    "action": "updateStructure",
+                                    "markForTranslation": false
+                                },
+                                "resourceId": storyID
+                            }
+                        };
                         var xhr = new XMLHttpRequest();
                         xhr.withCredentials = true;
 
@@ -281,7 +294,7 @@
 
                         xhr.send(data);
 
-                    }
+                    },
 
                     getModelList(content) {
                         // The path to the entity collection differs between contentOptimized and "classic"
