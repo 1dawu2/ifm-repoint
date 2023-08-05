@@ -301,6 +301,7 @@
                         xhr.addEventListener("readystatechange", function () {
                             if (this.readyState === 4) {
                                 console.log(this.responseText);
+                                return this.responseText
                             }
                         });
 
@@ -309,16 +310,7 @@
                         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                         xhr.setRequestHeader("Accept-Language", "en_GB");
 
-                        xhr.onload = function (e) {
-                            resolve(xhr.response);
-                        };
-                        xhr.onerror = function () {
-                            resolve(undefined);
-                            console.error("** An error occurred during the XMLHttpRequest");
-                        };
-
                         xhr.send(data);
-
                     },
 
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
