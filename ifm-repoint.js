@@ -13,7 +13,7 @@
 
         <script id="oView" name="oView" type="sapui5/xmlview">
             <mvc:View
-			    controllerName="ifm.dnd"
+			    controllerName="ifm.repoint"
 				xmlns:l="sap.ui.layout"
 				xmlns:mvc="sap.ui.core.mvc"
 				xmlns="sap.m">
@@ -258,7 +258,30 @@
             ], function (jQuery, Controller) {
                 "use strict";
 
-                return Controller.extend("ifm.dnd", {
+                return Controller.extend("ifm.repoint", {
+
+                    updateStory() {
+                        var data = "{\n    \"action\": \"updateContent\",\n    \"data\": {\n        \"parentResId\": \"\",\n        \"resourceType\": \"\",\n        \"name\": \"\",\n        \"description\": \"\",\n        \"cdata\": ,\n        \"updateOpt\": {\n            \"action\": \"updateStructure\",\n            \"markForTranslation\": false\n        },\n        \"resourceId\": \"179AF700C1F6054D4DB416C623EE5D2B\"\n    }\n}";
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.withCredentials = true;
+
+                        xhr.addEventListener("readystatechange", function () {
+                            if (this.readyState === 4) {
+                                console.log(this.responseText);
+                            }
+                        });
+
+                        xhr.open("POST", "https://infomotion1.eu10.hanacloudservices.cloud.sap/sap/fpa/services/rest/epm/contentlib?tenant=K");
+
+                        // WARNING: Cookies will be stripped away by the browser before sending the request.
+                        //xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
+                        //xhr.setRequestHeader("x-csrf-token", "82fe0784-68bc-4475-9e82-6398627de615");
+                        xhr.setRequestHeader("Content-Type", "application/json");
+
+                        xhr.send(data);
+
+                    }
 
                     getModelList(content) {
                         // The path to the entity collection differs between contentOptimized and "classic"
