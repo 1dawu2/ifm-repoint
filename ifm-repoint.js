@@ -451,8 +451,8 @@
                             content: [ui5Card]
                         });
                         this.oDefaultDialog = new sap.m.Dialog({
-                            width: "100%",
-                            height: "400px",
+                            contentWidth: "100%",
+                            contentHeight: "400px",
                             title: "Settings",
                             content: [ui5ScrollContainer],
                             beginButton: new sap.m.Button({
