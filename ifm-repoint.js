@@ -340,6 +340,8 @@
                             }
                         });
 
+                        console.log(this.FPA_CSRF_TOKEN);
+
                         xhr.open("POST", "https://infomotion1.eu10.hanacloudservices.cloud.sap/sap/fpa/services/rest/epm/contentlib?tenant=K");
 
                         // WARNING: Cookies will be stripped away by the browser before sending the request.
@@ -376,6 +378,25 @@
                             }
                         }
                         return entityList;
+                    },
+
+                    getDWCModelList(modelList) {
+                        let DWCModelList = [];
+                        for (let i = 0; i < modelList.length; i++) {
+                            entity = modelList[i];
+                            // filter for DWC models
+                            if (entity.type == "dataset") {
+                                // console.log(entity.data);
+                                // let entityName = entity.data.metadata.id.name;
+                                let entityName = entity.data.modelId;
+                                let entityDescription = entity.data.metadata?.description;
+                                if (entityDescription)
+                                    DWCModelList.push(JSON.stringify(entityName));
+                                console.log("Models: Found resourceId: " + entityName + " Name: " + entityDescription)
+                            }
+                        }
+                        // console.log(DWCModelList);
+                        return DWCModelList
                     },
 
                     replaceNameValueJSON(content, name, old_value, new_value) {
