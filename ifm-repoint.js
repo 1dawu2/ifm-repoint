@@ -296,7 +296,7 @@
                         };
 
                         var xhr = new XMLHttpRequest();
-                        xhr.withCredentials = false;
+                        xhr.withCredentials = true;
 
                         xhr.addEventListener("readystatechange", function () {
                             if (this.readyState === 4) {
