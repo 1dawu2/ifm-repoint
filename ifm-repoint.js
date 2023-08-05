@@ -473,9 +473,8 @@
                                     });
 
 
-                                    this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(resp => {
-                                        this.getModelList(resp);
-                                    });
+                                    this.getModelList(resp);
+
 
 
                                     // this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
