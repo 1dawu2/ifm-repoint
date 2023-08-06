@@ -62,6 +62,15 @@
             this.model_List_Count = 0;
             this.model_List_Processed = -1;
             this.model_List = '';
+            this.dataSource = '';
+            this.objectName = '';
+            this.description = '';
+            this.schemaName = '';
+            this.connName = '';
+            this.resourceId = '';
+            this.parentSourceId = '';
+            this.type = '';
+            this.modelDefinition = '';
 
 
             loadthis(this);
@@ -357,6 +366,27 @@
                         return content;
                     },
 
+                    replacementCheck(content, old_value) {
+                        let backQuote = String.fromCharCode(92) + '"';
+                        let old_value_backQuote = backQuote + old_value + backQuote;
+                        let position_backQuote = content.search(old_value_backQuote);
+
+                        let old_value_stringify = JSON.stringify(old_value);
+                        let position_stringify = content.search(old_value_stringify);
+
+                        let position = -1;
+                        if (position_stringify != -1) { position = position_stringify; };
+                        if (position_backQuote != -1) { position = position_backQuote; };
+
+                        if (position != -1) {
+                            console.log("JSON Search/Replace: Attention - Old pattern still found after replacement! Revisit finding!");
+                            console.log("JSON Search/Replace: Context Snipped of first occurence: [...] " + content.substring(position - 30, position + old_value.length + 1)) + " [...]";
+                        } else {
+                            console.log("JSON Search/Replace: All occurences of " + old_value_stringify + " and " + old_value_backQuote + " have been replaced.");
+                        }
+                        return position;
+                    },
+
                     onInit: function (oEvent) {
                     },
 
@@ -396,6 +426,14 @@
                                     that_.storyID = that_._export_settings.list[2]['old_value'];
                                     var res = this.getStoryInfo(that_.storyID).then(function (e) {
                                         content = JSON.parse(e.target.response);
+                                        that_.modelDefinition = JSON.stringify(content.data.cdata);
+                                        that_.dataSource = content.data.cdata.sources[0];
+                                        that_.objectName = that_.dataSource.objectName;
+                                        that_.description = content.description;
+                                        that_.schemaName = JSON.stringify(that_.dataSource.schemaName);
+                                        that_.resourceId = content.resourceId;
+                                        that_.parentSourceId = content.parentResId;
+                                        that_.type = content.resourceType;
 
                                         let entityList = [];
                                         let storyContentFound = false;
@@ -528,6 +566,40 @@
                                         that_.resourceInfoStoryReplacedConn = JSON.stringify(that_.resourceInfoStory);
 
                                         this.updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID)
+
+                                        // change space for model defintion
+                                        if (old_space != new_space) {
+                                            console.log("Space replacement starts ------------------")
+                                            modelDefinition = that_.replaceNameValueJSON(that_.modelDefinition, "schemaName", old_space, new_space);
+                                            modelDefinition = that_.replaceNameValueJSON(that_.modelDefinition, "SchemaName", old_space, new_space);
+                                            // Is there an additional name-value pattern for connection or just a false positive finding?
+                                            let position = that_.replacementCheck(that_.modelDefinition, old_space);
+                                        }
+
+
+                                        if (old_name != new_name) {
+                                            console.log("Connection replacement starts ------------------")
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "connectionName", old_name, new_name);
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "System", old_name, new_name);
+                                            // Is there an additional name-value pattern for connection or just a false positive finding?
+                                            let position = replacementCheck(modelDefinition, old_name);
+                                            pm.test("Search: Is old connection name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
+                                        }
+
+                                        if (old_model != new_model && old_model == objectName) {
+                                            console.log("DWC Model replacement starts ------------------")
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "name", old_model, new_model);
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "description", old_model, new_model);
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "objectName", old_model, new_model);
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "ObjectName", old_model, new_model);
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "displayName", old_model, new_model);
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "en", old_model, new_model);
+                                            modelDefinition = replaceNameValueJSON(modelDefinition, "en_UK", old_model, new_model);
+                                            // Is there an additional name-value pattern for connection or just a false positive finding?
+                                            let position = replacementCheck(modelDefinition, old_model);
+                                            pm.test("Search: Is old model name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
+                                        }
+
 
                                     }, function (e) {
                                         // handle errors
