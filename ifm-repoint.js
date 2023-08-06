@@ -53,6 +53,15 @@
             this._export_settings.list = {};
             this.resourceInfoStoryIsOptimized = false;
             this.resourceInfoStory = {};
+            this.resourceInfoStoryReplacedConn = '';
+            this.resourceInfoStoryName = '';
+            this.resourceInfoStoryType = '';
+            this.resourceInfoStoryParentId = '';
+            this.resourceInfoStoryDescription = '';
+            this.model_List_Count = 0;
+            this.model_List_Processed = -1;
+            this.model_List = '';
+
 
             loadthis(this);
 
@@ -414,10 +423,17 @@
                                     var content = {};
                                     var res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (e) {
                                         content = JSON.parse(e.target.response);
+
                                         let entityList = [];
                                         let storyContentFound = false;
                                         try {
-                                            // optimized path
+                                            // set attributes
+                                            this.resourceInfoStory = content.data.cdata;
+                                            this.resourceInfoStoryReplacedConn = JSON.stringify(resourceInfoStory);
+                                            this.resourceInfoStoryName = content.name;
+                                            this.resourceInfoStoryType = content.resourceType;
+                                            this.resourceInfoStoryParentId = content.metadata.parentId;
+                                            this.resourceInfoStoryDescription = content.metadata.description;
                                             entityList = content.data.cdata.contentOptimized.entities;
                                             storyContentFound = true;
                                             console.log("Story is content optimized.");
@@ -451,6 +467,9 @@
                                             }
                                         }
                                         console.log(DWCModelList);
+                                        this.model_List_Count = DWCModelList.length;
+                                        this.model_List_Processed = -1;
+                                        this.model_List = JSON.stringify(DWCModelList);
 
                                     }, function (e) {
                                         // handle errors
