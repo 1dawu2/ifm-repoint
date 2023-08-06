@@ -51,6 +51,7 @@
 
             this._export_settings = {};
             this._export_settings.list = {};
+            this.storyID = '';
             this.resourceInfoStoryIsOptimized = false;
             this.resourceInfoStory = '';
             this.resourceInfoStoryReplacedConn = '';
@@ -316,39 +317,31 @@
                     },
 
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
-                        var data = {
-                            "action": "updateContent",
-                            "data": {
-                                "parentResId": resourceInfoStoryParentId,
-                                "resourceType": resourceInfoStoryType,
-                                "name": resourceInfoStoryName,
-                                "description": resourceInfoStoryDescription,
-                                "cdata": resourceInfoStoryReplacedConn,
-                                "updateOpt": {
-                                    "action": "updateStructure",
-                                    "markForTranslation": false
-                                },
-                                "resourceId": storyID
-                            }
-                        };
-                        var xhr = new XMLHttpRequest();
-                        xhr.withCredentials = true;
-
-                        xhr.addEventListener("readystatechange", function () {
-                            if (this.readyState === 4) {
-                                console.log(this.responseText);
-                            }
+                        return new Promise(function (resolve, reject) {
+                            var data = JSON.stringify({
+                                "action": "updateContent",
+                                "data": {
+                                    "parentResId": resourceInfoStoryParentId,
+                                    "resourceType": resourceInfoStoryType,
+                                    "name": resourceInfoStoryName,
+                                    "description": resourceInfoStoryDescription,
+                                    "cdata": resourceInfoStoryReplacedConn,
+                                    "updateOpt": {
+                                        "action": "updateStructure",
+                                        "markForTranslation": false
+                                    },
+                                    "resourceId": storyID
+                                }
+                            });
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
+                            xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
+                            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                            xhr.setRequestHeader("Accept-Language", "en_GB");
+                            xhr.onload = resolve;
+                            xhr.onerror = reject;
+                            xhr.send(data);
                         });
-
-                        xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
-
-                        // WARNING: Cookies will be stripped away by the browser before sending the request.
-                        //xhr.setRequestHeader("Cookie", "s:IBGXzjjviOIwz7NyjNX4SLVj5bYswc5x.Ch8F1wvNx1dJ947DA5vfusaoar4Iow9XCZKCv0ez33w");
-                        xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
-                        xhr.setRequestHeader("Content-Type", "application/json");
-
-                        xhr.send(data);
-
                     },
 
                     replaceNameValueJSON(content, name, old_value, new_value) {
@@ -400,7 +393,8 @@
                                 text: "OK",
                                 press: function () {
                                     var content = {};
-                                    var res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (e) {
+                                    that_.storyID = that_._export_settings.list[2]['old_value'];
+                                    var res = this.getStoryInfo(that_.storyID).then(function (e) {
                                         content = JSON.parse(e.target.response);
 
                                         let entityList = [];
@@ -449,33 +443,91 @@
                                         that_.model_List_Processed = -1;
                                         that_.model_List = JSON.stringify(DWCModelList);
 
-                                        let old_name = that_._export_settings.list[1]['old_value'];
-                                        let new_name = that_._export_settings.list[1]['new_value'];
+                                        let backslash = String.fromCharCode(92);
+                                        let backQuote = backslash + '"';
 
-                                        if (old_name != new_name) {
+                                        // handle connection change
+                                        let old_connection = that_._export_settings.list[1]['old_value'];
+                                        let new_connection = that_._export_settings.list[1]['new_value'];
+                                        if (old_connection != new_connection) {
                                             console.log("Connection replacement starts ------------------");
-                                            resourceInfoStory = replaceNameValueJSON(resourceInfoStory, "systemName", old_name, new_name);
-                                            resourceInfoStory = replaceNameValueJSON(resourceInfoStory, "connectionName", old_name, new_name);
-                                            resourceInfoStory = replaceNameValueJSON(resourceInfoStory, "System", old_name, new_name);
+                                            that_.resourceInfoStory = this.replaceNameValueJSON(resourceInfoStory, "systemName", old_connection, new_connection);
+                                            that_.resourceInfoStory = this.replaceNameValueJSON(resourceInfoStory, "connectionName", old_connection, new_connection);
+                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "System", old_connection, new_connection);
 
-                                            let old_ff_system = backQuote + "System" + backQuote + ":" + backQuote + old_name + backQuote;
-                                            let new_ff_system = backQuote + "System" + backQuote + ":" + backQuote + new_name + backQuote;
+                                            let old_ff_system = backQuote + "System" + backQuote + ":" + backQuote + old_connection + backQuote;
+                                            let new_ff_system = backQuote + "System" + backQuote + ":" + backQuote + new_connection + backQuote;
                                             console.log("JSON Search/replace: " + old_ff_system + " replace by " + new_ff_system);
-                                            resourceInfoStory = resourceInfoStory.replaceAll(old_ff_system, new_ff_system);
+                                            that_.resourceInfoStory = that_.resourceInfoStory.replaceAll(old_ff_system, new_ff_system);
 
-                                            let old_uqm_system = JSON.stringify("uqmRemoteSystemNames") + ":[" + JSON.stringify(old_name);
-                                            let new_uqm_system = JSON.stringify("uqmRemoteSystemNames") + ":[" + JSON.stringify(new_name);
+                                            let old_uqm_system = JSON.stringify("uqmRemoteSystemNames") + ":[" + JSON.stringify(old_connection);
+                                            let new_uqm_system = JSON.stringify("uqmRemoteSystemNames") + ":[" + JSON.stringify(new_connection);
                                             console.log("JSON Search/replace: " + old_uqm_system + " replace by " + new_uqm_system);
-                                            resourceInfoStory = resourceInfoStory.replaceAll(old_uqm_system, new_uqm_system);
+                                            that_.resourceInfoStory = that_.resourceInfoStory.replaceAll(old_uqm_system, new_uqm_system);
 
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
-                                            let position = replacementCheck(resourceInfoStory, old_name);
+                                            let position = replacementCheck(that_.resourceInfoStory, old_connection);
                                             pm.test("Search: Is old connection name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
 
                                         } else {
                                             console.log("Connection replacement skipped for story as old and new name are the same.");
                                         }
 
+                                        // handle space change
+                                        let old_space = that_._export_settings.list[0]['old_value'];
+                                        let new_space = that_._export_settings.list[0]['new_value'];
+
+                                        if (old_space != new_space) {
+                                            console.log("Space replacement starts ------------------");
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "remoteSchemaName", old_space, new_space);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "schemaName", old_space, new_space);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "SchemaName", old_space, new_space);
+
+                                            let old_inamodel = "inamodel:[" + old_space;
+                                            let new_inamodel = "inamodel:[" + new_space;
+                                            that_.resourceInfoStory = that_.resourceInfoStory.replaceAll(old_inamodel, new_inamodel);
+
+                                            let old_ff_query = backQuote + "SchemaName" + backQuote + ":" + backQuote + old_space + backQuote;
+                                            let new_ff_query = backQuote + "SchemaName" + backQuote + ":" + backQuote + new_space + backQuote;
+                                            that_.resourceInfoStory = that_.resourceInfoStory.replaceAll(old_ff_query, new_ff_query);
+
+                                            // Is there an additional name-value pattern for space or just a false positive finding?
+                                            let position = replacementCheck(that_.resourceInfoStory, old_space);
+                                            pm.test("Search: Is old space name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
+
+                                        } else {
+                                            console.log("Space replacement skipped for story as old and new name are the same.")
+                                        }
+
+                                        // handle model change
+                                        let old_model = that_._export_settings.list[3]['old_value'];
+                                        let new_model = that_._export_settings.list[3]['new_value'];
+
+                                        if (old_model != new_model) {
+                                            console.log("DWC Model replacement starts ------------------")
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "name", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "description", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "shortDescription", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "objectName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "ObjectName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "displayName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "en", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "en_UK", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "remoteObjectName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "datasetName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "datasetDescription", old_model, new_model);
+                                            // Is there an additional name-value pattern for connection or just a false positive finding?
+                                            let position = replacementCheck(that_.resourceInfoStory, old_model);
+                                            pm.test("Search: Is old model name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
+                                        }
+                                        else {
+                                            console.log("Model replacement skipped for story as old and new name are the same.")
+                                        }
+
+                                        // set the replaced connection information
+                                        that_.resourceInfoStoryReplacedConn = JSON.stringify(that_.resourceInfoStory);
+
+                                        this.updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID)
 
                                     }, function (e) {
                                         // handle errors
