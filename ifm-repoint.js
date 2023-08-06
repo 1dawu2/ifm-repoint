@@ -52,7 +52,7 @@
             this._export_settings = {};
             this._export_settings.list = {};
             this.resourceInfoStoryIsOptimized = false;
-            this.resourceInfoStory = {};
+            this.resourceInfoStory = '';
             this.resourceInfoStoryReplacedConn = '';
             this.resourceInfoStoryName = '';
             this.resourceInfoStoryType = '';
@@ -428,7 +428,7 @@
                                         let storyContentFound = false;
                                         try {
                                             // set attributes
-                                            this.resourceInfoStory = content.data.cdata;
+                                            this.resourceInfoStory = JSON.stringify(content.data.cdata);
                                             this.resourceInfoStoryReplacedConn = JSON.stringify(resourceInfoStory);
                                             this.resourceInfoStoryName = content.name;
                                             this.resourceInfoStoryType = content.resourceType;
