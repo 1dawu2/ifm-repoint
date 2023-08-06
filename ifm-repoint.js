@@ -430,10 +430,10 @@
                                             // set attributes
                                             // this.resourceInfoStory = JSON.stringify(content.data.cdata);
                                             // this.resourceInfoStoryReplacedConn = JSON.stringify(resourceInfoStory);
-                                            this.resourceInfoStoryName = content.name;
-                                            this.resourceInfoStoryType = content.resourceType;
-                                            this.resourceInfoStoryParentId = content.metadata.parentId;
-                                            this.resourceInfoStoryDescription = content.metadata.description;
+                                            // this.resourceInfoStoryName = content.name;
+                                            // this.resourceInfoStoryType = content.resourceType;
+                                            // this.resourceInfoStoryParentId = content.metadata.parentId;
+                                            // this.resourceInfoStoryDescription = content.metadata.description;
                                             entityList = content.data.cdata.contentOptimized.entities;
                                             storyContentFound = true;
                                             console.log("Story is content optimized.");
