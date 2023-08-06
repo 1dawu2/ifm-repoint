@@ -428,8 +428,8 @@
                                         let storyContentFound = false;
                                         try {
                                             // set attributes
-                                            this.resourceInfoStory = JSON.stringify(content.data.cdata);
-                                            this.resourceInfoStoryReplacedConn = JSON.stringify(resourceInfoStory);
+                                            // this.resourceInfoStory = JSON.stringify(content.data.cdata);
+                                            // this.resourceInfoStoryReplacedConn = JSON.stringify(resourceInfoStory);
                                             this.resourceInfoStoryName = content.name;
                                             this.resourceInfoStoryType = content.resourceType;
                                             this.resourceInfoStoryParentId = content.metadata.parentId;
