@@ -473,7 +473,7 @@
                                         let storyContentFound = false;
                                         try {
                                             // optimized path
-                                            entityList = content.cdata.contentOptimized.entities;
+                                            entityList = content.data.cdata.contentOptimized.entities;
                                             storyContentFound = true;
                                             console.log("Story is content optimized.");
                                             this.resourceInfoStoryIsOptimized = true;
@@ -481,7 +481,7 @@
                                             if (storyContentFound == false) {
                                                 try {
                                                     // classic path
-                                                    entityList = content.cdata.content.entities;
+                                                    entityList = content.data.cdata.content.entities;
                                                     storyContentFound = true;
                                                     console.log("Story is not content Optimized -> classic format.");
                                                     this.resourceInfoStoryIsOptimized = false;
