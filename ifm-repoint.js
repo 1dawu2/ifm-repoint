@@ -449,6 +449,34 @@
                                         that_.model_List_Processed = -1;
                                         that_.model_List = JSON.stringify(DWCModelList);
 
+                                        let old_name = that_._export_settings.list[1]['old_value'];
+                                        let new_name = that_._export_settings.list[1]['new_value'];
+
+                                        if (old_name != new_name) {
+                                            console.log("Connection replacement starts ------------------");
+                                            resourceInfoStory = replaceNameValueJSON(resourceInfoStory, "systemName", old_name, new_name);
+                                            resourceInfoStory = replaceNameValueJSON(resourceInfoStory, "connectionName", old_name, new_name);
+                                            resourceInfoStory = replaceNameValueJSON(resourceInfoStory, "System", old_name, new_name);
+
+                                            let old_ff_system = backQuote + "System" + backQuote + ":" + backQuote + old_name + backQuote;
+                                            let new_ff_system = backQuote + "System" + backQuote + ":" + backQuote + new_name + backQuote;
+                                            console.log("JSON Search/replace: " + old_ff_system + " replace by " + new_ff_system);
+                                            resourceInfoStory = resourceInfoStory.replaceAll(old_ff_system, new_ff_system);
+
+                                            let old_uqm_system = JSON.stringify("uqmRemoteSystemNames") + ":[" + JSON.stringify(old_name);
+                                            let new_uqm_system = JSON.stringify("uqmRemoteSystemNames") + ":[" + JSON.stringify(new_name);
+                                            console.log("JSON Search/replace: " + old_uqm_system + " replace by " + new_uqm_system);
+                                            resourceInfoStory = resourceInfoStory.replaceAll(old_uqm_system, new_uqm_system);
+
+                                            // Is there an additional name-value pattern for connection or just a false positive finding?
+                                            let position = replacementCheck(resourceInfoStory, old_name);
+                                            pm.test("Search: Is old connection name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
+
+                                        } else {
+                                            console.log("Connection replacement skipped for story as old and new name are the same.");
+                                        }
+
+
                                     }, function (e) {
                                         // handle errors
                                     });
