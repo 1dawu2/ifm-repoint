@@ -506,9 +506,9 @@
                                         let new_connection = that_._export_settings.list[1]['new_value'];
                                         if (old_connection != new_connection) {
                                             console.log("Connection replacement starts ------------------");
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(resourceInfoStory, "systemName", old_connection, new_connection);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(resourceInfoStory, "connectionName", old_connection, new_connection);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "System", old_connection, new_connection);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(resourceInfoStory, "systemName", old_connection, new_connection);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(resourceInfoStory, "connectionName", old_connection, new_connection);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "System", old_connection, new_connection);
 
                                             let old_ff_system = backQuote + "System" + backQuote + ":" + backQuote + old_connection + backQuote;
                                             let new_ff_system = backQuote + "System" + backQuote + ":" + backQuote + new_connection + backQuote;
@@ -534,9 +534,9 @@
 
                                         if (old_space != new_space) {
                                             console.log("Space replacement starts ------------------");
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "remoteSchemaName", old_space, new_space);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "schemaName", old_space, new_space);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "SchemaName", old_space, new_space);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "remoteSchemaName", old_space, new_space);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "schemaName", old_space, new_space);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "SchemaName", old_space, new_space);
 
                                             let old_inamodel = "inamodel:[" + old_space;
                                             let new_inamodel = "inamodel:[" + new_space;
@@ -560,17 +560,17 @@
 
                                         if (old_model != new_model) {
                                             console.log("DWC Model replacement starts ------------------")
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "name", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "description", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "shortDescription", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "objectName", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "ObjectName", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "displayName", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "en", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "en_UK", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "remoteObjectName", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "datasetName", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "datasetDescription", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "name", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "description", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "shortDescription", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "objectName", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "ObjectName", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "displayName", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "en", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "en_UK", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "remoteObjectName", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "datasetName", old_model, new_model);
+                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "datasetDescription", old_model, new_model);
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
                                             let position = replacementCheck(that_.resourceInfoStory, old_model);
                                         }
