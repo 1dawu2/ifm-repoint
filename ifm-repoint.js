@@ -305,14 +305,6 @@
                                 }
                             });
                             var xhr = new XMLHttpRequest();
-
-                            // xhr.addEventListener("readystatechange", function () {
-                            //     if (this.readyState === 4) {
-                            //         console.log(this.responseText);
-                            //         return JSON.stringify(this.responseText)
-                            //     }
-                            // });
-
                             xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
                             xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
                             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -372,19 +364,6 @@
                         return content;
                     },
 
-                    getStoryContent: async function (storyId) {
-                        if (storyId) {
-                            const statusesPromise = Promise.allSettled([
-                                sap.fpa.ui.story.StoryFetcher.getContent(storyId)
-                            ]);
-                            // wait...
-                            const statuses = await statusesPromise;
-                            // after 1 second
-                            console.log(statuses[0].value.cdata);
-                            return statuses[0].value.cdata;
-                        }
-                    },
-
                     onInit: function (oEvent) {
                     },
 
@@ -428,16 +407,16 @@
                                         let storyContentFound = false;
                                         try {
                                             // set attributes
-                                            // this.resourceInfoStory = JSON.stringify(content.data.cdata);
-                                            // this.resourceInfoStoryReplacedConn = JSON.stringify(resourceInfoStory);
-                                            // this.resourceInfoStoryName = content.name;
-                                            // this.resourceInfoStoryType = content.resourceType;
-                                            // this.resourceInfoStoryParentId = content.metadata.parentId;
-                                            // this.resourceInfoStoryDescription = content.metadata.description;
+                                            that_.resourceInfoStory = JSON.stringify(content.data.cdata);
+                                            that_.resourceInfoStoryReplacedConn = JSON.stringify(resourceInfoStory);
+                                            that_.resourceInfoStoryName = content.name;
+                                            that_.resourceInfoStoryType = content.resourceType;
+                                            that_.resourceInfoStoryParentId = content.metadata.parentId;
+                                            that_.resourceInfoStoryDescription = content.metadata.description;
                                             entityList = content.data.cdata.contentOptimized.entities;
                                             storyContentFound = true;
                                             console.log("Story is content optimized.");
-                                            this.resourceInfoStoryIsOptimized = true;
+                                            that_.resourceInfoStoryIsOptimized = true;
                                         } catch {
                                             if (storyContentFound == false) {
                                                 try {
@@ -445,7 +424,7 @@
                                                     entityList = content.data.cdata.content.entities;
                                                     storyContentFound = true;
                                                     console.log("Story is not content Optimized -> classic format.");
-                                                    this.resourceInfoStoryIsOptimized = false;
+                                                    that_.resourceInfoStoryIsOptimized = false;
                                                 } catch {
                                                     console.log("No Story Content Found.")
                                                 }
@@ -467,9 +446,9 @@
                                             }
                                         }
                                         console.log(DWCModelList);
-                                        this.model_List_Count = DWCModelList.length;
-                                        this.model_List_Processed = -1;
-                                        this.model_List = JSON.stringify(DWCModelList);
+                                        that_.model_List_Count = DWCModelList.length;
+                                        that_.model_List_Processed = -1;
+                                        that_.model_List = JSON.stringify(DWCModelList);
 
                                     }, function (e) {
                                         // handle errors
