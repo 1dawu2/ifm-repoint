@@ -581,20 +581,17 @@
                                         // set the replaced connection information
                                         that_.resourceInfoStoryReplacedConn = JSON.stringify(that_.resourceInfoStory);
 
-                                        this.updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID)
-
-
-
+                                        this.updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID);
 
 
                                     }, function (e) {
                                         // handle errors
                                     });
 
-                                    // get story content
+
                                     // get story content and exchange the model information
-                                    var mod = this.getStoryContent(that_.storyID).then(function (e) {
-                                        content = JSON.parse(e.target.response); s
+                                    var mod = this.getStoryContent(that_.model_List).then(function (e) {
+                                        content = JSON.parse(e.target.response);
                                         that_.modelDefinition = JSON.stringify(content.data.cdata);
                                         that_.dataSource = content.data.cdata.sources[0];
                                         that_.objectName = that_.dataSource.objectName;
