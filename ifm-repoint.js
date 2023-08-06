@@ -350,52 +350,6 @@
 
                     },
 
-                    getModelList(content) {
-                        // The path to the entity collection differs between contentOptimized and "classic"
-                        // Try both paths - give preference on optimized
-                        let entityList = [];
-                        let storyContentFound = false;
-                        try {
-                            // optimized path
-                            entityList = content.cdata.contentOptimized.entities;
-                            storyContentFound = true;
-                            console.log("Story is content optimized.");
-                            this.resourceInfoStoryIsOptimized = true;
-                        } catch {
-                            if (storyContentFound == false) {
-                                try {
-                                    // classic path
-                                    entityList = content.cdata.content.entities;
-                                    storyContentFound = true;
-                                    console.log("Story is not content Optimized -> classic format.");
-                                    this.resourceInfoStoryIsOptimized = false;
-                                } catch {
-                                    console.log("No Story Content Found.")
-                                }
-                            }
-                        }
-                        return entityList;
-                    },
-
-                    getDWCModelList(modelList) {
-                        let DWCModelList = [];
-                        for (let i = 0; i < modelList.length; i++) {
-                            entity = modelList[i];
-                            // filter for DWC models
-                            if (entity.type == "dataset") {
-                                // console.log(entity.data);
-                                // let entityName = entity.data.metadata.id.name;
-                                let entityName = entity.data.modelId;
-                                let entityDescription = entity.data.metadata?.description;
-                                if (entityDescription)
-                                    DWCModelList.push(JSON.stringify(entityName));
-                                console.log("Models: Found resourceId: " + entityName + " Name: " + entityDescription)
-                            }
-                        }
-                        // console.log(DWCModelList);
-                        return DWCModelList
-                    },
-
                     replaceNameValueJSON(content, name, old_value, new_value) {
 
                         let name_str = JSON.stringify(name);
@@ -457,15 +411,6 @@
                             beginButton: new sap.m.Button({
                                 text: "OK",
                                 press: function () {
-                                    // var oData = sap.ui.getCore().getModel().oData;
-                                    // that_.updateList(oData);
-
-                                    // this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (content) {
-                                    //     var entities = this.getModelList(content);
-                                    // }).catch(function (error) {
-                                    //     console.log(error);
-                                    // });
-
                                     var content = {};
                                     var res = this.getStoryInfo("179AF700C1F6054D4DB416C623EE5D2B").then(function (e) {
                                         content = JSON.parse(e.target.response);
@@ -490,17 +435,27 @@
                                                 }
                                             }
                                         }
+
+                                        let DWCModelList = [];
+                                        for (let i = 0; i < entityList.length; i++) {
+                                            entity = entityList[i];
+                                            // filter for DWC models
+                                            if (entity.type == "dataset") {
+                                                // console.log(entity.data);
+                                                // let entityName = entity.data.metadata.id.name;
+                                                let entityName = entity.data.modelId;
+                                                let entityDescription = entity.data.metadata?.description;
+                                                if (entityDescription)
+                                                    DWCModelList.push(JSON.stringify(entityName));
+                                                console.log("Models: Found resourceId: " + entityName + " Name: " + entityDescription)
+                                            }
+                                        }
+                                        console.log(DWCModelList);
+
                                     }, function (e) {
                                         // handle errors
                                     });
 
-                                    // this.getStoryContent("179AF700C1F6054D4DB416C623EE5D2B").then(function (response) {
-                                    //     var resourceInfoStory = JSON.stringify(response);
-                                    //     var entities = this.getModelList(response);
-                                    //     that_.setStoryInfo(oData);
-                                    // }).catch(function (error) {
-                                    //     console.log(error);
-                                    // });
 
                                     this.oDefaultDialog.close();
                                     // show message
