@@ -408,7 +408,6 @@
                                         try {
                                             // set attributes
                                             that_.resourceInfoStory = JSON.stringify(content.data.cdata);
-                                            that_.resourceInfoStoryReplacedConn = JSON.stringify(resourceInfoStory);
                                             that_.resourceInfoStoryName = content.name;
                                             that_.resourceInfoStoryType = content.resourceType;
                                             that_.resourceInfoStoryParentId = content.metadata.parentId;
