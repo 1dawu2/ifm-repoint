@@ -438,7 +438,7 @@
 
                                         let DWCModelList = [];
                                         for (let i = 0; i < entityList.length; i++) {
-                                            entity = entityList[i];
+                                            var entity = entityList[i];
                                             // filter for DWC models
                                             if (entity.type == "dataset") {
                                                 // console.log(entity.data);
