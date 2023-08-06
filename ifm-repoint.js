@@ -325,6 +325,31 @@
                         });
                     },
 
+                    getStoryContent(modelID) {
+                        return new Promise(function (resolve, reject) {
+                            var data = JSON.stringify({
+                                "action": "getContent",
+                                "data": {
+                                    "resourceId": that_.modelID,
+                                    "oOpt": {
+                                        "getSourceResource": true,
+                                        "propertyBag": true,
+                                        "includeAncestorInfo": true,
+                                        "fetchDisplayName": true
+                                    }
+                                }
+                            });
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
+                            xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
+                            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                            xhr.setRequestHeader("Accept-Language", "en_GB");
+                            xhr.onload = resolve;
+                            xhr.onerror = reject;
+                            xhr.send(data);
+                        });
+                    },
+
                     updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
                         return new Promise(function (resolve, reject) {
                             var data = JSON.stringify({
@@ -426,14 +451,6 @@
                                     that_.storyID = that_._export_settings.list[2]['old_value'];
                                     var res = this.getStoryInfo(that_.storyID).then(function (e) {
                                         content = JSON.parse(e.target.response);
-                                        that_.modelDefinition = JSON.stringify(content.data.cdata);
-                                        that_.dataSource = content.data.cdata.sources[0];
-                                        that_.objectName = that_.dataSource.objectName;
-                                        that_.description = content.description;
-                                        that_.schemaName = JSON.stringify(that_.dataSource.schemaName);
-                                        that_.resourceId = content.resourceId;
-                                        that_.parentSourceId = content.parentResId;
-                                        that_.type = content.resourceType;
 
                                         let entityList = [];
                                         let storyContentFound = false;
@@ -556,7 +573,6 @@
                                             that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "datasetDescription", old_model, new_model);
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
                                             let position = replacementCheck(that_.resourceInfoStory, old_model);
-                                            pm.test("Search: Is old model name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
                                         }
                                         else {
                                             console.log("Model replacement skipped for story as old and new name are the same.")
@@ -566,6 +582,27 @@
                                         that_.resourceInfoStoryReplacedConn = JSON.stringify(that_.resourceInfoStory);
 
                                         this.updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID)
+
+
+
+
+
+                                    }, function (e) {
+                                        // handle errors
+                                    });
+
+                                    // get story content
+                                    // get story content and exchange the model information
+                                    var mod = this.getStoryContent(that_.storyID).then(function (e) {
+                                        content = JSON.parse(e.target.response); s
+                                        that_.modelDefinition = JSON.stringify(content.data.cdata);
+                                        that_.dataSource = content.data.cdata.sources[0];
+                                        that_.objectName = that_.dataSource.objectName;
+                                        that_.description = content.description;
+                                        that_.schemaName = JSON.stringify(that_.dataSource.schemaName);
+                                        that_.resourceId = content.resourceId;
+                                        that_.parentSourceId = content.parentResId;
+                                        that_.type = content.resourceType;
 
                                         // change space for model defintion
                                         if (old_space != new_space) {
@@ -583,7 +620,6 @@
                                             modelDefinition = replaceNameValueJSON(modelDefinition, "System", old_name, new_name);
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
                                             let position = replacementCheck(modelDefinition, old_name);
-                                            pm.test("Search: Is old connection name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
                                         }
 
                                         if (old_model != new_model && old_model == objectName) {
@@ -597,13 +633,13 @@
                                             modelDefinition = replaceNameValueJSON(modelDefinition, "en_UK", old_model, new_model);
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
                                             let position = replacementCheck(modelDefinition, old_model);
-                                            pm.test("Search: Is old model name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
                                         }
-
 
                                     }, function (e) {
                                         // handle errors
                                     });
+
+
 
 
                                     this.oDefaultDialog.close();
