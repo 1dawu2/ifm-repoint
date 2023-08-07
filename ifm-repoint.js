@@ -71,6 +71,8 @@
             this.parentSourceId = '';
             this.type = '';
             this.modelDefinition = '';
+            jQuery.sap.declare("sap.fpa.ui.infra.model.service.ModelingServices");
+            this.contentLibMgr = this.getService("EPM/ObjectMgr");
 
 
             loadthis(this);
@@ -401,6 +403,53 @@
 
                                                 }
                                             });
+
+                                            // l.getInstance = function () {
+                                            //     let e = new l;
+                                            //     return e.oManager = a.getService("EPM/ObjectMgr"),
+                                            //         e.oSecurityManager = a.getService("EPM/Security"),
+                                            //         e.oModelUtil = a.getService("fpa.modelUtil"),
+                                            //         e.oModel = a.getService("fpa.model"),
+                                            //         e.oDimension = a.getService("fpa.dimension"),
+                                            //         e.oMember = a.getService("fpa.Member"),
+                                            //         e.oContentLibManager = a.getService("EPM/Contentlib"),
+                                            //         l._instance = e,
+                                            //         e
+                                            // }
+
+                                            // l.prototype.model_update = function(e, t, i, r, o) {
+                                            //     if (o = o || {
+                                            //         action: "updateStructure"
+                                            //     },
+                                            //         e.translation) {
+                                            //         let t = !!e.translation.enabled;
+                                            //         o.markForTranslation = t,
+                                            //             t && (o.origLangu = e.translation.originalLanguage)
+                                            //     }
+                                            //     o.localVer = t;
+                                            //     let a = {
+                                            //         parentResId: e.parentResourceId,
+                                            //         resourceType: "CUBE",
+                                            //         name: e.shortDescription,
+                                            //         description: e.description || "",
+                                            //         cdata: JSON.stringify(e),
+                                            //         updateOpt: o,
+                                            //         resourceId: e.id
+                                            //     };
+                                            //     return this.oContentLibManager.callMethod("updateContent", a, !0, function (e) {
+                                            //         n.getContext().postNotification("onModelChange"),
+                                            //             i(e)
+                                            //     }, r)
+
+                                            // resourceId: e.name, <- story id
+                                            //     cdata: JSON.stringify(n),
+                                            //         updateOpt: m, < contentOnly = true
+                                            //             mobileSupport: r,
+                                            //                 fetchOpt: {
+                                            //     bIncDependency: !1,
+                                            //         bIncSubItems: !1
+                                            // }
+
                                             var xhr = new XMLHttpRequest();
                                             xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
                                             xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
