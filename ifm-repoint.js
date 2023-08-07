@@ -382,16 +382,23 @@
                                             var data = JSON.stringify({
                                                 "action": "updateContent",
                                                 "data": {
+                                                    "cdata": resourceInfoStoryReplacedConn,
+                                                    "description": resourceInfoStoryDescription,
+                                                    "fetchOpt": {
+                                                        "bIncDependency": false,
+                                                        "bIncSubItems": false
+                                                    },
+                                                    "mobileSupport": 0,
+                                                    "name": resourceInfoStoryName,
+                                                    "resourceId": storyID,
                                                     "parentResId": resourceInfoStoryParentId,
                                                     "resourceType": resourceInfoStoryType,
-                                                    "name": resourceInfoStoryName,
-                                                    "description": resourceInfoStoryDescription,
-                                                    "cdata": resourceInfoStoryReplacedConn,
+
                                                     "updateOpt": {
                                                         "action": "updateStructure",
                                                         "markForTranslation": false
                                                     },
-                                                    "resourceId": storyID
+
                                                 }
                                             });
                                             var xhr = new XMLHttpRequest();
@@ -451,7 +458,7 @@
                                             that_.resourceInfoStory = JSON.stringify(content.data.cdata);
                                             that_.resourceInfoStoryName = content.name;
                                             that_.resourceInfoStoryType = content.resourceType;
-                                            that_.resourceInfoStoryParentId = content.metadata.parentId;
+                                            that_.resourceInfoStoryParentId = content.metadata.parentId.name;
                                             that_.resourceInfoStoryDescription = content.metadata.description;
                                             entityList = content.data.cdata.contentOptimized.entities;
                                             storyContentFound = true;
