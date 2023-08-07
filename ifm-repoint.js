@@ -72,8 +72,7 @@
             this.type = '';
             this.modelDefinition = '';
             jQuery.sap.declare("sap.fpa.ui.infra.model.service.ModelingServices");
-            this.contentLibMgr = this.getService("EPM/ObjectMgr");
-
+            this.contentLibMgr = sap.fpa.ui.infra.common.service.ServiceManager.getSerivce("EPM/ObjectMgr"); //this.getService("EPM/ObjectMgr");
 
             loadthis(this);
 
