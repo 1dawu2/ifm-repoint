@@ -579,7 +579,7 @@
                                         // set the replaced connection information
                                         that_.resourceInfoStoryReplacedConn = JSON.stringify(that_.resourceInfoStory);
 
-                                        this.updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID);
+                                        that_.updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID);
 
 
                                     }, function (e) {
