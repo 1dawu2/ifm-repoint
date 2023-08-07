@@ -569,6 +569,8 @@
                                             that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "datasetName", old_model, new_model);
                                             that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "datasetDescription", old_model, new_model);
                                             that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "modelName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "sourceDescription", old_model, new_model);
+
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
                                             let position = replacementCheck(that_.resourceInfoStory, old_model);
                                         }
