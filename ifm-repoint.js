@@ -393,14 +393,12 @@
                                                     "mobileSupport": 0,
                                                     "name": resourceInfoStoryName,
                                                     "resourceId": storyID,
-                                                    // "parentResId": resourceInfoStoryParentId,
-                                                    // "resourceType": resourceInfoStoryType,
-
-                                                    // "updateOpt": {
-                                                    //     "action": "updateStructure",
-                                                    //     "markForTranslation": false
-                                                    // },
-
+                                                    "parentResId": resourceInfoStoryParentId,
+                                                    "resourceType": "CUBE", //resourceInfoStoryType,
+                                                    "updateOpt": {
+                                                        "action": "updateStructure",
+                                                        "markForTranslation": false
+                                                    },
                                                 }
                                             });
 
