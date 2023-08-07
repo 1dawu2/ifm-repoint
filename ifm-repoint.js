@@ -111,15 +111,6 @@
             return sacList
         }
 
-        setStoryInfo(oData) {
-            if (typeof oData != 'undefined' && oData) {
-                Object.values(oData).forEach(
-                    val => console.log(val)
-                );
-
-            }
-        }
-
         connectedCallback() {
             try {
                 if (window.commonApp) {
@@ -350,34 +341,6 @@
                         });
                     },
 
-                    updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
-                        return new Promise(function (resolve, reject) {
-                            var data = JSON.stringify({
-                                "action": "updateContent",
-                                "data": {
-                                    "parentResId": resourceInfoStoryParentId,
-                                    "resourceType": resourceInfoStoryType,
-                                    "name": resourceInfoStoryName,
-                                    "description": resourceInfoStoryDescription,
-                                    "cdata": resourceInfoStoryReplacedConn,
-                                    "updateOpt": {
-                                        "action": "updateStructure",
-                                        "markForTranslation": false
-                                    },
-                                    "resourceId": storyID
-                                }
-                            });
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
-                            xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
-                            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                            xhr.setRequestHeader("Accept-Language", "en_GB");
-                            xhr.onload = resolve;
-                            xhr.onerror = reject;
-                            xhr.send(data);
-                        });
-                    },
-
                     onInit: function (oEvent) {
                     },
 
@@ -413,6 +376,34 @@
                             beginButton: new sap.m.Button({
                                 text: "OK",
                                 press: function () {
+
+                                    function updateStory(resourceInfoStoryParentId, resourceInfoStoryType, resourceInfoStoryName, resourceInfoStoryDescription, resourceInfoStoryReplacedConn, storyID) {
+                                        return new Promise(function (resolve, reject) {
+                                            var data = JSON.stringify({
+                                                "action": "updateContent",
+                                                "data": {
+                                                    "parentResId": resourceInfoStoryParentId,
+                                                    "resourceType": resourceInfoStoryType,
+                                                    "name": resourceInfoStoryName,
+                                                    "description": resourceInfoStoryDescription,
+                                                    "cdata": resourceInfoStoryReplacedConn,
+                                                    "updateOpt": {
+                                                        "action": "updateStructure",
+                                                        "markForTranslation": false
+                                                    },
+                                                    "resourceId": storyID
+                                                }
+                                            });
+                                            var xhr = new XMLHttpRequest();
+                                            xhr.open("POST", "/sap/fpa/services/rest/epm/contentlib?tenant=K");
+                                            xhr.setRequestHeader("x-csrf-token", FPA_CSRF_TOKEN);
+                                            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                                            xhr.setRequestHeader("Accept-Language", "en_GB");
+                                            xhr.onload = resolve;
+                                            xhr.onerror = reject;
+                                            xhr.send(data);
+                                        });
+                                    };
 
                                     function replaceNameValueJSON(content, name, old_value, new_value) {
 
@@ -582,7 +573,7 @@
                                         // set the replaced connection information
                                         that_.resourceInfoStoryReplacedConn = JSON.stringify(that_.resourceInfoStory);
 
-                                        that_.updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID);
+                                        updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID);
 
 
                                     }, function (e) {
