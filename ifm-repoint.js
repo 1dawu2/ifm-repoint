@@ -506,7 +506,7 @@
                                         let new_connection = that_._export_settings.list[1]['new_value'];
                                         if (old_connection != new_connection) {
                                             console.log("Connection replacement starts ------------------");
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(resourceInfoStory, "systemName", old_connection, new_connection);
+                                            that_.resourceInfoStory = () => that_.replaceNameValueJSON(resourceInfoStory, "systemName", old_connection, new_connection);
                                             that_.resourceInfoStory = that_.replaceNameValueJSON(resourceInfoStory, "connectionName", old_connection, new_connection);
                                             that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "System", old_connection, new_connection);
 
