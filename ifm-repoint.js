@@ -560,7 +560,7 @@
 
                                         if (old_model != new_model) {
                                             console.log("DWC Model replacement starts ------------------")
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "name", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "name", old_model, new_model);
                                             that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "description", old_model, new_model);
                                             that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "shortDescription", old_model, new_model);
                                             that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "objectName", old_model, new_model);
