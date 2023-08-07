@@ -458,10 +458,10 @@
                                             that_.resourceInfoStory = JSON.stringify(content.data.cdata);
                                             that_.resourceInfoStoryName = content.name;
                                             that_.resourceInfoStoryType = content.resourceType;
-                                            if (content.metadata.parentId = Null) {
-                                                that_.resourceInfoStoryParentId = that_.storyID;
-                                            } else {
+                                            if (content.metadata.parentId) {
                                                 that_.resourceInfoStoryParentId = content.metadata.parentId.name;
+                                            } else {
+                                                that_.resourceInfoStoryParentId = that_.storyID;
                                             }
                                             that_.resourceInfoStoryDescription = content.metadata.description;
                                             entityList = content.data.cdata.contentOptimized.entities;
