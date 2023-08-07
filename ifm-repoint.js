@@ -378,40 +378,6 @@
                         });
                     },
 
-                    // replaceNameValueJSON(content, name, old_value, new_value) {
-
-                    //     let name_str = JSON.stringify(name);
-                    //     let old_value_str = JSON.stringify(old_value);
-                    //     let new_value_str = JSON.stringify(new_value);
-                    //     let search_str = name_str + ":" + old_value_str;
-                    //     let replace_str = name_str + ":" + new_value_str;
-                    //     console.log("JSON Search/replace: " + search_str + " replace by " + replace_str);
-
-                    //     content = content.replaceAll(search_str, replace_str)
-                    //     return content;
-                    // },
-
-                    replacementCheck(content, old_value) {
-                        let backQuote = String.fromCharCode(92) + '"';
-                        let old_value_backQuote = backQuote + old_value + backQuote;
-                        let position_backQuote = content.search(old_value_backQuote);
-
-                        let old_value_stringify = JSON.stringify(old_value);
-                        let position_stringify = content.search(old_value_stringify);
-
-                        let position = -1;
-                        if (position_stringify != -1) { position = position_stringify; };
-                        if (position_backQuote != -1) { position = position_backQuote; };
-
-                        if (position != -1) {
-                            console.log("JSON Search/Replace: Attention - Old pattern still found after replacement! Revisit finding!");
-                            console.log("JSON Search/Replace: Context Snipped of first occurence: [...] " + content.substring(position - 30, position + old_value.length + 1)) + " [...]";
-                        } else {
-                            console.log("JSON Search/Replace: All occurences of " + old_value_stringify + " and " + old_value_backQuote + " have been replaced.");
-                        }
-                        return position;
-                    },
-
                     onInit: function (oEvent) {
                     },
 
@@ -461,7 +427,26 @@
                                         return content;
                                     };
 
+                                    function replacementCheck(content, old_value) {
+                                        let backQuote = String.fromCharCode(92) + '"';
+                                        let old_value_backQuote = backQuote + old_value + backQuote;
+                                        let position_backQuote = content.search(old_value_backQuote);
 
+                                        let old_value_stringify = JSON.stringify(old_value);
+                                        let position_stringify = content.search(old_value_stringify);
+
+                                        let position = -1;
+                                        if (position_stringify != -1) { position = position_stringify; };
+                                        if (position_backQuote != -1) { position = position_backQuote; };
+
+                                        if (position != -1) {
+                                            console.log("JSON Search/Replace: Attention - Old pattern still found after replacement! Revisit finding!");
+                                            console.log("JSON Search/Replace: Context Snipped of first occurence: [...] " + content.substring(position - 30, position + old_value.length + 1)) + " [...]";
+                                        } else {
+                                            console.log("JSON Search/Replace: All occurences of " + old_value_stringify + " and " + old_value_backQuote + " have been replaced.");
+                                        }
+                                        return position;
+                                    };
 
                                     var content = {};
                                     that_.storyID = that_._export_settings.list[2]['old_value'];
@@ -522,9 +507,9 @@
                                         let new_connection = that_._export_settings.list[1]['new_value'];
                                         if (old_connection != new_connection) {
                                             console.log("Connection replacement starts ------------------");
-                                            that_.resourceInfoStory = () => that_.replaceNameValueJSON(resourceInfoStory, "systemName", old_connection, new_connection);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(resourceInfoStory, "connectionName", old_connection, new_connection);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "System", old_connection, new_connection);
+                                            that_.resourceInfoStory = replaceNameValueJSON(resourceInfoStory, "systemName", old_connection, new_connection);
+                                            that_.resourceInfoStory = replaceNameValueJSON(resourceInfoStory, "connectionName", old_connection, new_connection);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "System", old_connection, new_connection);
 
                                             let old_ff_system = backQuote + "System" + backQuote + ":" + backQuote + old_connection + backQuote;
                                             let new_ff_system = backQuote + "System" + backQuote + ":" + backQuote + new_connection + backQuote;
@@ -538,8 +523,6 @@
 
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
                                             let position = replacementCheck(that_.resourceInfoStory, old_connection);
-                                            pm.test("Search: Is old connection name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
-
                                         } else {
                                             console.log("Connection replacement skipped for story as old and new name are the same.");
                                         }
@@ -550,9 +533,9 @@
 
                                         if (old_space != new_space) {
                                             console.log("Space replacement starts ------------------");
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "remoteSchemaName", old_space, new_space);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "schemaName", old_space, new_space);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "SchemaName", old_space, new_space);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "remoteSchemaName", old_space, new_space);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "schemaName", old_space, new_space);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "SchemaName", old_space, new_space);
 
                                             let old_inamodel = "inamodel:[" + old_space;
                                             let new_inamodel = "inamodel:[" + new_space;
@@ -564,8 +547,6 @@
 
                                             // Is there an additional name-value pattern for space or just a false positive finding?
                                             let position = replacementCheck(that_.resourceInfoStory, old_space);
-                                            pm.test("Search: Is old space name found after replacement? " + (position != -1), function () { pm.expect(position).to.eql(-1); });
-
                                         } else {
                                             console.log("Space replacement skipped for story as old and new name are the same.")
                                         }
@@ -577,16 +558,16 @@
                                         if (old_model != new_model) {
                                             console.log("DWC Model replacement starts ------------------")
                                             that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "name", old_model, new_model);
-                                            that_.resourceInfoStory = this.replaceNameValueJSON(that_.resourceInfoStory, "description", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "shortDescription", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "objectName", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "ObjectName", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "displayName", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "en", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "en_UK", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "remoteObjectName", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "datasetName", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "datasetDescription", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "description", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "shortDescription", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "objectName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "ObjectName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "displayName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "en", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "en_UK", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "remoteObjectName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "datasetName", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "datasetDescription", old_model, new_model);
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
                                             let position = replacementCheck(that_.resourceInfoStory, old_model);
                                         }
@@ -620,8 +601,8 @@
                                         // change space for model defintion
                                         if (old_space != new_space) {
                                             console.log("Space replacement starts ------------------")
-                                            modelDefinition = that_.replaceNameValueJSON(that_.modelDefinition, "schemaName", old_space, new_space);
-                                            modelDefinition = that_.replaceNameValueJSON(that_.modelDefinition, "SchemaName", old_space, new_space);
+                                            modelDefinition = replaceNameValueJSON(that_.modelDefinition, "schemaName", old_space, new_space);
+                                            modelDefinition = replaceNameValueJSON(that_.modelDefinition, "SchemaName", old_space, new_space);
                                             // Is there an additional name-value pattern for connection or just a false positive finding?
                                             let position = that_.replacementCheck(that_.modelDefinition, old_space);
                                         }
