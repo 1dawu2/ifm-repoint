@@ -391,13 +391,13 @@
                                                     "mobileSupport": 0,
                                                     "name": resourceInfoStoryName,
                                                     "resourceId": storyID,
-                                                    "parentResId": resourceInfoStoryParentId,
-                                                    "resourceType": resourceInfoStoryType,
+                                                    // "parentResId": resourceInfoStoryParentId,
+                                                    // "resourceType": resourceInfoStoryType,
 
-                                                    "updateOpt": {
-                                                        "action": "updateStructure",
-                                                        "markForTranslation": false
-                                                    },
+                                                    // "updateOpt": {
+                                                    //     "action": "updateStructure",
+                                                    //     "markForTranslation": false
+                                                    // },
 
                                                 }
                                             });
