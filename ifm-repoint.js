@@ -447,6 +447,22 @@
                             beginButton: new sap.m.Button({
                                 text: "OK",
                                 press: function () {
+
+                                    // function replaceNameValueJSON(content, name, old_value, new_value) {
+
+                                    //     let name_str = JSON.stringify(name);
+                                    //     let old_value_str = JSON.stringify(old_value);
+                                    //     let new_value_str = JSON.stringify(new_value);
+                                    //     let search_str = name_str + ":" + old_value_str;
+                                    //     let replace_str = name_str + ":" + new_value_str;
+                                    //     console.log("JSON Search/replace: " + search_str + " replace by " + replace_str);
+
+                                    //     content = content.replaceAll(search_str, replace_str)
+                                    //     return content;
+                                    // };
+
+
+
                                     var content = {};
                                     that_.storyID = that_._export_settings.list[2]['old_value'];
                                     var res = this.getStoryInfo(that_.storyID).then(function (e) {
@@ -560,8 +576,8 @@
 
                                         if (old_model != new_model) {
                                             console.log("DWC Model replacement starts ------------------")
-                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "name", old_model, new_model);
-                                            that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "description", old_model, new_model);
+                                            that_.resourceInfoStory = () => that_.replaceNameValueJSON(that_.resourceInfoStory, "name", old_model, new_model);
+                                            that_.resourceInfoStory = replaceNameValueJSON(that_.resourceInfoStory, "description", old_model, new_model);
                                             that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "shortDescription", old_model, new_model);
                                             that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "objectName", old_model, new_model);
                                             that_.resourceInfoStory = that_.replaceNameValueJSON(that_.resourceInfoStory, "ObjectName", old_model, new_model);
