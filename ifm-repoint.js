@@ -72,7 +72,15 @@
             this.type = '';
             this.modelDefinition = '';
             jQuery.sap.declare("sap.fpa.ui.infra.model.service.ModelingServices");
-            this.contentLibMgr = sap.fpa.ui.infra.common.service.ServiceManager.getSerivce("EPM/ObjectMgr"); //this.getService("EPM/ObjectMgr");
+            if (window.sap && sap.fpa && sap.fpa.ui && sap.fpa.ui.infra) {
+                if (sap.fpa.ui.infra.common) {
+                    let context = sap.fpa.ui.infra.common.getContext();
+                }
+                if (sap.fpa.ui.infra.model) {
+                    let model = sap.fpa.ui.infra.model.service;
+                }
+            }
+            // this.contentLibMgr = sap.fpa.ui.infra.common.service.ServiceManager.getSerivce("EPM/ObjectMgr"); //this.getService("EPM/ObjectMgr");
 
             loadthis(this);
 
