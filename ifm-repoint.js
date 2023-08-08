@@ -418,8 +418,9 @@
                                                         },
                                                         "contentOnly": true,
                                                         "ignoreVersion": false,
-                                                    }
-                                                });
+                                                    },
+                                                }
+                                            });
 
                                             // l.getInstance = function () {
                                             //     let e = new l;
