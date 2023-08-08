@@ -393,21 +393,33 @@
                                                 "data": {
                                                     "cdata": resourceInfoStoryReplacedConn,
                                                     "description": resourceInfoStoryDescription,
+                                                    "name": resourceInfoStoryName,
+                                                    "resourceId": storyID,
                                                     "fetchOpt": {
                                                         "bIncDependency": false,
                                                         "bIncSubItems": false
                                                     },
+                                                    // "mobileSupport": 0,
+                                                    // "name": resourceInfoStoryName,
+                                                    // "resourceId": storyID,
+                                                    // "parentResId": resourceInfoStoryParentId,
+                                                    // "resourceType": "CUBE", //resourceInfoStoryType,
+                                                    // "updateOpt": {
+                                                    //     "action": "updateStructure",
+                                                    //     "markForTranslation": false
+                                                    // },
                                                     "mobileSupport": 0,
-                                                    "name": resourceInfoStoryName,
-                                                    "resourceId": storyID,
-                                                    "parentResId": resourceInfoStoryParentId,
-                                                    "resourceType": "CUBE", //resourceInfoStoryType,
                                                     "updateOpt": {
-                                                        "action": "updateStructure",
-                                                        "markForTranslation": false
-                                                    },
-                                                }
-                                            });
+                                                        "dataChangeInsightsSupport": {
+                                                            "value": 0
+                                                        },
+                                                        "enhancedProperties": {
+                                                            "STORY_OPTIMIZED_INFO": "VIEW_EDIT_STORY2"
+                                                        },
+                                                        "contentOnly": true,
+                                                        "ignoreVersion": false,
+                                                    }
+                                                });
 
                                             // l.getInstance = function () {
                                             //     let e = new l;
