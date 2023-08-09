@@ -79,6 +79,9 @@
                 if (sap.fpa.ui.infra.model) {
                     this.model = sap.fpa.ui.infra.model.service;
                 }
+                if (sap.fpa.ui.story.Utils) {
+                    this.contentLib = sap.fpa.ui.story.Utils.getContentLibService();
+                }
             }
             // this.contentLibMgr = sap.fpa.ui.infra.common.service.ServiceManager.getSerivce("EPM/ObjectMgr"); //this.getService("EPM/ObjectMgr");
 
