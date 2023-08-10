@@ -602,7 +602,7 @@
                                     // var req = this.updateContent(that_.storyID).then(function (e) {
                                     //     content = JSON.parse(e.target.respnse);
                                     // });
-                                    var storyRes = that_.contentLib.getResourcesEx(that_._context);
+                                    var storyRes = that_.contentLib.getResourcesEx(that_.context);
                                     console.log(storyRes);
                                     var res = this.getStoryInfo(that_.storyID).then(function (e) {
                                         content = JSON.parse(e.target.response);
