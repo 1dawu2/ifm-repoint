@@ -81,7 +81,8 @@
                     this.model = sap.fpa.ui.infra.model.service;
                 }
                 if (sap.fpa.ui.infra.service) {
-                    this.model = sap.fpa.ui.infra.model.service.ServiceProxy;
+                    this.serviceProxy = sap.fpa.ui.infra.service.ServiceProxy;
+                    this.serviceMgr = sap.fpa.ui.infra.service.ServiceManager;
                 }
                 if (sap.fpa.ui.story.Utils) {
                     this.contentLib = sap.fpa.ui.story.Utils.getContentLibService();
