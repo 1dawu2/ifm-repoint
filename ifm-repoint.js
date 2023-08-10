@@ -434,7 +434,7 @@
                                 icon: "sap-icon://checklist",
                                 text: {
                                     parts: [
-                                        { path: "/listItems" }
+                                        { path: "listItems>key" }
                                     ],
                                     formatter: function (id) {
                                         return id;
@@ -450,7 +450,7 @@
                         var ui5List = new sap.m.List({
                             backgroundDesign: "Transparent",
                             items: {
-                                path: "/listItems",
+                                path: "listItems>key",
                                 template: listItem
                             },
                         });
