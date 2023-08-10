@@ -409,8 +409,8 @@
                                 path: "/listItems",
                                 template: new sap.m.StandardListItem({
                                     title: "{key}",
-                                    info: "{old_value}",
-                                    description: "{new_value}"
+                                    info: "old: {old_value}",
+                                    description: "new {new_value}"
                                 })
                             }
                         });
@@ -560,9 +560,11 @@
 
                                     var content = {};
                                     that_.storyID = that_._export_settings.list[2]['old_value'];
-                                    var req = this.updateContent(that_.storyID).then(function (e) {
-                                        content = JSON.parse(e.target.respnse);
-                                    });
+                                    // var req = this.updateContent(that_.storyID).then(function (e) {
+                                    //     content = JSON.parse(e.target.respnse);
+                                    // });
+                                    var storyRes = that_.contentLib.getResourcesEx(that_.storyID);
+                                    console.log(storyRes);
                                     var res = this.getStoryInfo(that_.storyID).then(function (e) {
                                         content = JSON.parse(e.target.response);
 
@@ -702,7 +704,7 @@
                                         // set the replaced connection information
                                         that_.resourceInfoStoryReplacedConn = JSON.stringify(that_.resourceInfoStory);
 
-                                        updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID);
+                                        //updateStory(that_.resourceInfoStoryParentId, that_.resourceInfoStoryType, that_.resourceInfoStoryName, that_.resourceInfoStoryDescription, that_.resourceInfoStoryReplacedConn, that_.storyID);
 
 
                                     }, function (e) {
