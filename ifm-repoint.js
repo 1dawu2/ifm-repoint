@@ -428,16 +428,30 @@
                         var modelList = new sap.ui.model.json.JSONModel();
                         modelList.setData(that_.prepareListData(that_.list, false));
                         sap.ui.getCore().setModel(modelList);
-
+                        var listItem = new sap.m.CustomListItem({
+                            content: new sap.ui.commons.Button({
+                                icon: "sap-icon://checklist",
+                                text: {
+                                    parts: [
+                                        { path: "/listItems" }
+                                    ],
+                                    formatter: function (id) {
+                                        return id;
+                                    },
+                                },
+                                press: function (oEvent) {
+                                    var sValue = oEvent.oSource.mProperties["text"];
+                                    var id = sValue[0];
+                                    that.that.getStoryOptimized(id);
+                                },
+                            }),
+                        });
                         var ui5List = new sap.m.List({
+                            backgroundDesign: "Transparent",
                             items: {
                                 path: "/listItems",
-                                template: new sap.m.StandardListItem({
-                                    title: "{key}",
-                                    info: "old: {old_value}",
-                                    description: "new {new_value}"
-                                })
-                            }
+                                template: listItem
+                            },
                         });
                         var ui5Card = new sap.f.Card({
                             content: [ui5List]
@@ -588,7 +602,7 @@
                                     // var req = this.updateContent(that_.storyID).then(function (e) {
                                     //     content = JSON.parse(e.target.respnse);
                                     // });
-                                    var storyRes = that_.contentLib.getResourcesEx(this._context);
+                                    var storyRes = that_.contentLib.getResourcesEx(that_._context);
                                     console.log(storyRes);
                                     var res = this.getStoryInfo(that_.storyID).then(function (e) {
                                         content = JSON.parse(e.target.response);
