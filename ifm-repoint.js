@@ -80,6 +80,9 @@
                 if (sap.fpa.ui.infra.model) {
                     this.model = sap.fpa.ui.infra.model.service;
                 }
+                if (sap.fpa.ui.infra.service) {
+                    this.model = sap.fpa.ui.infra.model.service.ServiceProxy(this._context);
+                }
                 if (sap.fpa.ui.story.Utils) {
                     this.contentLib = sap.fpa.ui.story.Utils.getContentLibService();
                 }
@@ -91,6 +94,28 @@
             this.addEventListener("click", event => {
                 console.log('click');
             });
+        }
+
+        getInstanc() {
+            jQuery.sap.declare("sap.fpa.ui.infra.model.service.ModelingServices");
+            let n = i(33)
+                , r = i(6)
+                , o = i(2462)
+                , a = i(179)
+                , s = i(181)
+                , l = function () { };
+            l.getInstance = function () {
+                let e = new l;
+                return e.oManager = a.getService("EPM/ObjectMgr"),
+                    e.oSecurityManager = a.getService("EPM/Security"),
+                    e.oModelUtil = a.getService("fpa.modelUtil"),
+                    e.oModel = a.getService("fpa.model"),
+                    e.oDimension = a.getService("fpa.dimension"),
+                    e.oMember = a.getService("fpa.Member"),
+                    e.oContentLibManager = a.getService("EPM/Contentlib"),
+                    l._instance = e,
+                    e
+            }
         }
 
         // CONTROL FLOW
@@ -563,7 +588,7 @@
                                     // var req = this.updateContent(that_.storyID).then(function (e) {
                                     //     content = JSON.parse(e.target.respnse);
                                     // });
-                                    var storyRes = that_.contentLib.getResourcesEx(that_.storyID);
+                                    var storyRes = that_.contentLib.getResourcesEx(this._context);
                                     console.log(storyRes);
                                     var res = this.getStoryInfo(that_.storyID).then(function (e) {
                                         content = JSON.parse(e.target.response);
