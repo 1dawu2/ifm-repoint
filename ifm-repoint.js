@@ -52,6 +52,7 @@
             this._export_settings = {};
             this._export_settings.list = {};
             this.storyID = '';
+            this.storyVersion = '';
             this.resourceInfoStoryIsOptimized = false;
             this.resourceInfoStory = '';
             this.resourceInfoStoryReplacedConn = '';
@@ -302,7 +303,7 @@
                                         },
                                         "contentOnly": true,
                                         "ignoreVersion": false,
-                                        "localVer": 13
+                                        "localVer": 16
                                     },
                                     "fetchOpt": {
                                         "bIncDependency": false,
@@ -575,6 +576,7 @@
                                             } else {
                                                 that_.resourceInfoStoryParentId = that_.storyID;
                                             }
+                                            that_.storyVersion = content.metadata.version;
                                             that_.resourceInfoStoryDescription = content.metadata.description;
                                             entityList = content.data.cdata.contentOptimized.entities;
                                             storyContentFound = true;
