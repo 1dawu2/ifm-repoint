@@ -303,8 +303,8 @@
                                                 "STORY_OPTIMIZED_INFO": "VIEW_EDIT_STORY2"
                                             },
                                             "contentOnly": true,
-                                            "ignoreVersion": false,
-                                            "localVer": 14
+                                            "ignoreVersion": true
+                                            // "localVer": 14
                                         },
                                         "fetchOpt": {
                                             "bIncDependency": false,
