@@ -557,7 +557,7 @@
 
                                     var content = {};
                                     that_.storyID = that_._export_settings.list[2]['old_value'];
-                                    var req = this.updateContent(that_storyID).then(function (e) {
+                                    var req = this.updateContent(that_.storyID).then(function (e) {
                                         content = JSON.parse(e.target.respnse);
                                     });
                                     var res = this.getStoryInfo(that_.storyID).then(function (e) {
